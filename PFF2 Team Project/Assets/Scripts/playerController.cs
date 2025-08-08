@@ -4,17 +4,17 @@ using UnityEngine;
 // - Implement the IDamage portion of it
 //
 
-public class playerController : MonoBehaviour,IDamage
+public class playerController : MonoBehaviour,IDamage,IForce
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
-    [SerializeField] Rigidbody rb;
+    
 
     [SerializeField] int HP;
     [SerializeField] int speed;
-    [SerializeField] int jumpSpeed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
+   [SerializeField] int jumpSpeed;
     public int gravity;
 
     [SerializeField] int shootDamage;
@@ -24,11 +24,12 @@ public class playerController : MonoBehaviour,IDamage
     float shootTimer;
 
     public int gravityOrig;
+    public int jumpSpeedOrig;
     int HPOrig;
     int jumpCount;
 
     Vector3 moveDirection;
-    Vector3 playerVel;
+   public Vector3 playerVel;
 
     bool isSprinting;
 
@@ -38,7 +39,8 @@ public class playerController : MonoBehaviour,IDamage
     {
         HPOrig = HP;
        gravityOrig = gravity;
-    }
+       jumpSpeedOrig = jumpSpeed;
+}
 
     
     void Update()
@@ -139,5 +141,11 @@ public class playerController : MonoBehaviour,IDamage
       
     }
     
-  
+    public void takeForce(Vector3 direction)
+    {
+     controller.Move(direction);
+
+              
+        
+    }
 }
