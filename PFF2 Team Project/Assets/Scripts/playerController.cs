@@ -4,17 +4,18 @@ using UnityEngine;
 // - Implement the IDamage portion of it
 //
 
-public class playerControl : MonoBehaviour
+public class playerController : MonoBehaviour,IDamage
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
+    [SerializeField] Rigidbody rb;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int jumpSpeed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
-    [SerializeField] int gravity;
+    public int gravity;
 
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
@@ -22,6 +23,7 @@ public class playerControl : MonoBehaviour
 
     float shootTimer;
 
+    public int gravityOrig;
     int HPOrig;
     int jumpCount;
 
@@ -35,6 +37,7 @@ public class playerControl : MonoBehaviour
     void Start()
     {
         HPOrig = HP;
+       gravityOrig = gravity;
     }
 
     
@@ -135,4 +138,6 @@ public class playerControl : MonoBehaviour
 
       
     }
+    
+  
 }
