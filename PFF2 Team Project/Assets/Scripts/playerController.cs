@@ -133,12 +133,12 @@ public class playerController : MonoBehaviour,IDamage,IForce
     {
         HP -= ammount;
 
-        //if (HP <= 0)
-        //{
-        //    GameManager.instance.YouLose();
-        //}
+        if (HP <= 0)
+        {
+            GameManager.instance.youlose();
+        }
 
-      
+
     }
     
     public void takeForce(Vector3 direction)
