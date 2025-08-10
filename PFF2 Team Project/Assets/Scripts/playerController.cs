@@ -37,7 +37,7 @@ public class playerController : MonoBehaviour,IDamage,IForce
     
     void Start()
     {
-        HPOrig = HP;
+       //HPOrig = HP;
        gravityOrig = gravity;
        jumpSpeedOrig = jumpSpeed;
 }
