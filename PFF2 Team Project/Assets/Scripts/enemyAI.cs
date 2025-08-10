@@ -54,6 +54,13 @@ public class enemyAI : MonoBehaviour
             PlayerinTrigger = true;
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerinTrigger = false;
+        }
+    }
 
     void shoot()
     {
