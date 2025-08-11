@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: -8729167998698003665}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -379,16 +379,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   controller: {fileID: 424459125158007274}
-  rb: {fileID: -8729167998698003665}
   HP: 10
   speed: 5
-  jumpSpeed: 5
   sprintMod: 2
   jumpMax: 1
+  jumpSpeed: 5
   gravity: 12
   shootDamage: 1
   shootRate: 1
   shootDist: 20
+  gravityOrig: 0
+  jumpSpeedOrig: 0
+  playerVel: {x: 0, y: 0, z: 0}
 --- !u!143 &424459125158007274
 CharacterController:
   m_ObjectHideFlags: 0
