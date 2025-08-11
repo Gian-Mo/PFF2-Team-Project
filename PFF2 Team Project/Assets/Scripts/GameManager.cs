@@ -66,4 +66,26 @@ public class GameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
+    public void statePause()
+    {
+        //isPaused = !isPaused;
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void stateunPause()
+    {
+        //isPaused = !isPaused;
+        //Time.timeScale = timescaleorig;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //menuActive.SetActive(false);
+        //menuActive = null;
+    }
+    public void youlose()
+    {
+        statePause();
+        //menuActive = menuLose;
+        //menuActive.SetActive(true);
+    }
 }
