@@ -32,12 +32,10 @@ public class playerController : MonoBehaviour,IDamage,IForce
    public Vector3 playerVel;
 
     bool isSprinting;
-
-
     
     void Start()
     {
-       //HPOrig = HP;
+        HPOrig = HP;
        gravityOrig = gravity;
        jumpSpeedOrig = jumpSpeed;
 }
@@ -135,7 +133,7 @@ public class playerController : MonoBehaviour,IDamage,IForce
 
         if (HP <= 0)
         {
-            GameManager.instance.youlose();
+            GameManager.instance.YouLose();
         }
 
 
