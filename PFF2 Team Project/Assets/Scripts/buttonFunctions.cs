@@ -16,10 +16,10 @@ public class buttonFunctions : MonoBehaviour
 
     public void quit()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#else
         Application.Quit();
-    #endif
+#endif
     }
 }
