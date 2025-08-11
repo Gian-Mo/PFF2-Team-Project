@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5198140903435515261}
+  - component: {fileID: 784535092562493124}
+  - component: {fileID: 3870089709453190657}
   - component: {fileID: 228709864351402704}
   - component: {fileID: 4156920883785243538}
   - component: {fileID: 1906343830955505033}
-  - component: {fileID: 1448810593580882965}
   - component: {fileID: 3959153320644294621}
-  - component: {fileID: 3870089709453190657}
   m_Layer: 0
   m_Name: LavaFloor
   m_TagString: Untagged
@@ -37,6 +37,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &784535092562493124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129304572434295252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d67083ffe72608468899e7c6c28ab54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  rb: {fileID: 3959153320644294621}
+  damageAmount: 150
+  damageRate: 0
+  speed: 5
+  destroyTime: 999
+--- !u!114 &3870089709453190657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129304572434295252}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad724def7d79ca428ebe8e84f6cf673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 3959153320644294621}
+  speed: 5
+  accel: 1
 --- !u!33 &228709864351402704
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -111,24 +144,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1448810593580882965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129304572434295252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e538a8749484ee94c82cec40e49715f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  rb: {fileID: 0}
-  damageAmount: 1000
-  damageRate: 0.5
-  speed: 0
-  destroyTime: 0
 --- !u!54 &3959153320644294621
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -156,18 +171,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3870089709453190657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129304572434295252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad724def7d79ca428ebe8e84f6cf673, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 3959153320644294621}
-  speed: 5
-  accel: 1
