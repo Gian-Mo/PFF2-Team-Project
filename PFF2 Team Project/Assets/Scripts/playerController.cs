@@ -4,17 +4,17 @@ using UnityEngine;
 // - Implement the IDamage portion of it
 //
 
-public class playerController : MonoBehaviour,IDamage,IForce
+public class playerController : MonoBehaviour, IDamage, IForce
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
-    
+
 
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
-   [SerializeField] int jumpSpeed;
+    [SerializeField] int jumpSpeed;
     public int gravity;
 
     [SerializeField] int shootDamage;
@@ -29,18 +29,24 @@ public class playerController : MonoBehaviour,IDamage,IForce
     int jumpCount;
 
     Vector3 moveDirection;
-   public Vector3 playerVel;
+    public Vector3 playerVel;
+    Vector3 playerScaleOrig;
 
     bool isSprinting;
-    
+    bool isJumping;
+
+
+
     void Start()
     {
         HPOrig = HP;
-       gravityOrig = gravity;
-       jumpSpeedOrig = jumpSpeed;
-}
+        gravityOrig = gravity;
+        jumpSpeedOrig = jumpSpeed;
+        playerScaleOrig = transform.localScale;
+        isJumping = false;
+    }
 
-    
+
     void Update()
     {
         Movement();
@@ -54,6 +60,7 @@ public class playerController : MonoBehaviour,IDamage,IForce
         {
             jumpCount = 0;
             playerVel = Vector3.zero;
+            isJumping = false;
         }
         else
             playerVel.y -= gravity * Time.deltaTime;
@@ -63,12 +70,15 @@ public class playerController : MonoBehaviour,IDamage,IForce
 
         controller.Move(moveDirection * speed * Time.deltaTime);
 
-        Jump();
+       
+            Jump(); 
+        
 
         controller.Move(playerVel * Time.deltaTime);
 
         Sprint();
 
+        Crouch();
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
@@ -84,6 +94,7 @@ public class playerController : MonoBehaviour,IDamage,IForce
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
+            isJumping = true;
         }
     }
 
@@ -127,6 +138,20 @@ public class playerController : MonoBehaviour,IDamage,IForce
 
     }
 
+    void Crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            transform.localScale = new Vector3(playerScaleOrig.x,(playerScaleOrig.y * 0.7f), playerScaleOrig.z); 
+        }
+        if (Input.GetButtonUp("Crouch"))
+        {
+            transform.localScale = playerScaleOrig;
+        }
+
+
+    }
+
     public void takeDamage(int ammount)
     {
         HP -= ammount;
@@ -141,9 +166,17 @@ public class playerController : MonoBehaviour,IDamage,IForce
     
     public void takeForce(Vector3 direction)
     {
-     controller.Move(direction);
+        if (isJumping)
+        {
+            controller.Move(direction); 
+        }
 
               
         
+    }
+
+  public bool IsJumping()
+    {
+        return isJumping;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField] typeOfForce type;
     [SerializeField] float timeOfForce;
     [SerializeField] float speed;
+  
 
     Rigidbody targetRigidBody;
  
@@ -36,8 +38,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
         DefineDirection(other);
         if (other.GetComponent<playerController>() != null)
         {
-            GameManager.instance.playerScript.playerVel = Vector3.forward;
-            GameManager.instance.playerScript.gravity = 0;
+
+            
+
+            if (GameManager.instance.playerScript.IsJumping())
+            {
+                GameManager.instance.playerScript.playerVel = Vector3.forward;
+                GameManager.instance.playerScript.gravity = 0; 
+            }       
+          
+            
         }
 
     }
@@ -46,10 +56,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public void OnTriggerStay(Collider other)
 
     {
+        
  
         IForce force = other.GetComponent<IForce>();
 
-      
 
         if (force != null && type == typeOfForce.toward)
         {
@@ -66,8 +76,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
        {
             GameManager.instance.playerScript.gravity = GameManager.instance.playerScript.gravityOrig;
        }
-           
-        
+
+       
     }
 
     void DefineDirection(Collider other)
@@ -83,5 +93,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
 
     }
+
+  
 
 }
