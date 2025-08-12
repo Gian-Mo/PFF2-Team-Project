@@ -52,6 +52,7 @@ MonoBehaviour:
   type: 0
   timeOfForce: 3
   speed: 10
+  trigger: {fileID: 9161225128010230933}
 --- !u!33 &768932798262289092
 MeshFilter:
   m_ObjectHideFlags: 0
