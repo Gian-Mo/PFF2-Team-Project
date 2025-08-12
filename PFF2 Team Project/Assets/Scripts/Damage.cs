@@ -4,23 +4,25 @@ using System.Collections;
 public class Damage : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    enum damageType { moving, stationary, DOT, homing }
+    enum damageType { moving, stationary, DOT, homing, slow }
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
 
+    [SerializeField] int slowAmount;
     [SerializeField] int damageAmount;
     [SerializeField] float damageRate;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
+    [SerializeField] float slowtime;
 
     bool isdamaging;
 
     void Start()
     {
-        if (type == damageType.moving || type == damageType.homing)
+        if (type == damageType.moving || type == damageType.homing || type == damageType.slow)
         {
             Destroy(gameObject, destroyTime);
-            if (type == damageType.moving)
+            if (type == damageType.moving || type == damageType.slow)
             {
                 rb.linearVelocity = transform.forward * speed;
             }
@@ -44,12 +46,15 @@ public class Damage : MonoBehaviour
         }
 
         IDamage dmg = other.GetComponent<IDamage>();
-
-        if (dmg != null && type != damageType.DOT)
+        if (dmg != null && type == damageType.slow)
+        {
+            dmg.takeSlow(slowAmount, slowtime);
+        }
+        else if (dmg != null && type != damageType.DOT)
         {
             dmg.takeDamage(damageAmount);
         }
-        if (type == damageType.moving || type == damageType.homing)
+        if (type == damageType.moving || type == damageType.homing || type == damageType.slow)
         {
             Destroy(gameObject);
         }
