@@ -900,7 +900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -50.889416}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2806056001165343078
@@ -919,8 +919,8 @@ MonoBehaviour:
   menuPause: {fileID: 5858103648343160655}
   menuWin: {fileID: 4516712705022556840}
   menuLose: {fileID: 4013818499408654540}
-  playerHPBar: {fileID: 0}
-  playerDamageScreen: {fileID: 0}
+  playerHPBar: {fileID: 6938827971258900206}
+  playerDamageScreen: {fileID: 8820894277696276343}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   isPaused: 0
