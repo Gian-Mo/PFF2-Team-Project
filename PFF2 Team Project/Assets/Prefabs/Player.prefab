@@ -376,7 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   controller: {fileID: 424459125158007274}
   HP: 10
   speed: 10
