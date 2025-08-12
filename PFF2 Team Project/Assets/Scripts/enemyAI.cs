@@ -13,6 +13,8 @@ public class enemyAI : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] Transform shootPos;
 
+    Color colorOrig;
+
     float shootTimer;
 
     bool PlayerinTrigger;
@@ -22,7 +24,7 @@ public class enemyAI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        GameManager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
@@ -66,6 +68,27 @@ public class enemyAI : MonoBehaviour
     {
         shootTimer = 0;
         Instantiate(bullet, shootPos.position, transform.rotation);
+    }
+
+    public void takeDamage(int amount)
+    {
+        if (HP > 0)
+        {
+            HP -= amount;
+            StartCoroutine(flashRed());
+        }
+
+        if (HP <= 0)
+        {
+            GameManager.instance.updateGameGoal(-1);
+            Destroy(gameObject);
+        }
+    }
+    IEnumerator flashRed()
+    {
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        model.material.color = colorOrig;
     }
 
 }

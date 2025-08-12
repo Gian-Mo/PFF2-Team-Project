@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuGameInstructions;
+
+    [SerializeField] TMP_Text gameGoalCountText;
 
     public Image playerHPBar;
     public GameObject playerDamageScreen;
@@ -17,6 +21,8 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
 
     float timeScaleOrig;
+
+    int gameGoalCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -63,10 +69,27 @@ public class GameManager : MonoBehaviour
         menuActive = null;
     }
 
+    public void updateGameGoal(int amount)
+    {
+        gameGoalCount += amount;
+        if (gameGoalCount <= 0)
+        {
+            // you won
+            statePause();
+            menuActive = menuWin;
+            menuActive.SetActive(true);
+        }
+    }
+
     public void YouLose()
     {
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
+    }
+
+    public void ClickOKToContinue()
+    {
+        
     }
 }
