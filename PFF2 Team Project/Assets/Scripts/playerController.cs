@@ -17,6 +17,8 @@ public class playerController : MonoBehaviour, IDamage, IForce
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] Transform headPos;
+    [SerializeField] GameObject projectile;
+    
     public int gravity;
 
     [SerializeField] int shootDamage;
