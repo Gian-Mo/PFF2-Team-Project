@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour
+public class enemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
 
@@ -24,6 +24,7 @@ public class enemyAI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        colorOrig = model.material.color;
         GameManager.instance.updateGameGoal(1);
     }
 
@@ -72,6 +73,7 @@ public class enemyAI : MonoBehaviour
 
     public void takeDamage(int amount)
     {
+
         if (HP > 0)
         {
             HP -= amount;
@@ -84,11 +86,21 @@ public class enemyAI : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
-
+    public void takeSlow(int amount, float slowtime)
+    {
+        float slowTimer = 0;
+        slowTimer += Time.deltaTime;
+        shootRate *= amount;
+        if (slowTimer >= slowtime)
+        {
+            shootRate /= amount;
+        }
+    }
 }
