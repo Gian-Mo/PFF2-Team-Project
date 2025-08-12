@@ -94,7 +94,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
             shootTimer = 0;
         }
         
-        if (speed <= speedOrig)
+        if (speed <= 0)
         {
             StartCoroutine(resetSpeed());
         }
