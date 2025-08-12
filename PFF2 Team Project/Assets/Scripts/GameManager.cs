@@ -94,12 +94,4 @@ public class GameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
-
-    public void ClickOKToContinue()
-    {
-        stateUnpause();
-        menuActive = menuGameInstructions;
-        menuActive.SetActive(false);
-        menuActive = null;
-    }
 }
