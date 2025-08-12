@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 3
   tags:
+<<<<<<< HEAD
   - End
+=======
+  - CanWallRun
+>>>>>>> 6fee3fbb626567db44099164169819c7d4013a41
   layers:
   - Default
   - TransparentFX
