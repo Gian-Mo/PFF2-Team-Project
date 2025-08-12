@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     float timeScaleOrig;
 
-    int gameGoalCount;
+    public int gameGoalCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -31,6 +31,13 @@ public class GameManager : MonoBehaviour
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
+    }
+
+    void Start()
+    {
+        statePause();
+        menuActive = menuGameInstructions;
+        menuActive.SetActive(true);
     }
 
     // Update is called once per frame
@@ -90,6 +97,9 @@ public class GameManager : MonoBehaviour
 
     public void ClickOKToContinue()
     {
-        
+        stateUnpause();
+        menuActive = menuGameInstructions;
+        menuActive.SetActive(false);
+        menuActive = null;
     }
 }
