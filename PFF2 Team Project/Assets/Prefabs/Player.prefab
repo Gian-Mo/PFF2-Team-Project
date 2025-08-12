@@ -379,10 +379,11 @@ MonoBehaviour:
     m_Bits: 8
   controller: {fileID: 424459125158007274}
   HP: 10
-  speed: 5
+  speed: 10
   sprintMod: 2
   jumpMax: 1
   jumpSpeed: 5
+  headPos: {fileID: 0}
   gravity: 12
   shootDamage: 1
   shootRate: 1

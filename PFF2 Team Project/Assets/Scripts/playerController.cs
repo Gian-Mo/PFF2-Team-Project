@@ -15,6 +15,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
+    [SerializeField] Transform headPos;
     public int gravity;
 
     [SerializeField] int shootDamage;
@@ -71,8 +72,9 @@ public class playerController : MonoBehaviour, IDamage, IForce
         controller.Move(moveDirection * speed * Time.deltaTime);
 
        
-            Jump(); 
+        Jump(); 
         
+        WallRunning();
 
         controller.Move(playerVel * Time.deltaTime);
 
@@ -138,6 +140,34 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     }
 
+    void WallRunning()
+    {
+        RaycastHit left;
+        RaycastHit right;
+
+
+        if (Physics.Raycast(headPos.position, transform.right, out right, 1, ~ignoreLayer))
+        {
+            if (right.collider.CompareTag("CanWallRun"))
+            {
+                jumpCount = 0;
+                playerVel = Vector3.zero; 
+            }
+           
+        }
+        if (Physics.Raycast(headPos.position, -transform.right, out left, 1, ~ignoreLayer))
+        {
+            if (left.collider.CompareTag("CanWallRun"))
+            {
+                jumpCount = 0;
+                playerVel = Vector3.zero;
+            }
+        }
+
+    }
+
+
+
     void Crouch()
     {
         if (Input.GetButtonDown("Crouch"))
@@ -166,12 +196,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     
     public void takeForce(Vector3 direction)
     {
-        if (isJumping)
-        {
-            controller.Move(direction); 
-        }
-
-              
+                     
         
     }
 
