@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - End
+  - CanWallRun
   layers:
   - Default
   - TransparentFX

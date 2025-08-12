@@ -46,7 +46,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
         jumpSpeedOrig = jumpSpeed;
         playerScaleOrig = transform.localScale;
         isJumping = false;
-        updatePlayerUI();
+        //updatePlayerUI();
     }
 
 
