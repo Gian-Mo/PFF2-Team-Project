@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: 8742355882087074622}
   - component: {fileID: 4593252763514951770}
   - component: {fileID: 424459125158007274}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -376,13 +376,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   controller: {fileID: 424459125158007274}
   HP: 10
-  speed: 5
+  speed: 10
   sprintMod: 2
   jumpMax: 1
-  jumpSpeed: 5
+  jumpSpeed: 10
+  headPos: {fileID: 2936697706718608472}
+  projectile: {fileID: 8777413897309509247, guid: a4e5b6f01b6b20440815831ff2bf0625, type: 3}
   gravity: 12
   shootDamage: 1
   shootRate: 1
