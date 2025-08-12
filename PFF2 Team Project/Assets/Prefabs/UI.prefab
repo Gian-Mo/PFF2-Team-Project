@@ -306,11 +306,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2355949765833235318}
+  - {fileID: 4200391186153795545}
+  - {fileID: 4040803973087656210}
   - {fileID: 2764773526688101499}
   - {fileID: 496903924855036490}
   - {fileID: 8716401697036651442}
-  - {fileID: 4200391186153795545}
-  - {fileID: 4040803973087656210}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -840,6 +840,7 @@ MonoBehaviour:
   menuPause: {fileID: 5858103648343160655}
   menuWin: {fileID: 4516712705022556840}
   menuLose: {fileID: 4013818499408654540}
+  playerHPBar: {fileID: 0}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   isPaused: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 //TODOS
 // - Implement the player controller
 // - Implement the IDamage portion of it
@@ -44,6 +45,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
         jumpSpeedOrig = jumpSpeed;
         playerScaleOrig = transform.localScale;
         isJumping = false;
+        updatePlayerUI();
     }
 
 
@@ -155,13 +157,25 @@ public class playerController : MonoBehaviour, IDamage, IForce
     public void takeDamage(int ammount)
     {
         HP -= ammount;
-
+        updatePlayerUI();
+        StartCoroutine(flashDamageScreen());
         if (HP <= 0)
         {
             GameManager.instance.YouLose();
         }
 
 
+    }
+    public void updatePlayerUI()
+    {
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    IEnumerator flashDamageScreen()
+    {
+        GameManager.instance.playerDamageScreen.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.instance.playerDamageScreen.SetActive(false);
     }
     
     public void takeForce(Vector3 direction)
@@ -179,4 +193,5 @@ public class playerController : MonoBehaviour, IDamage, IForce
     {
         return isJumping;
     }
+
 }
