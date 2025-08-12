@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 8113722551556218236}
-  HP: 100
+  HP: 10
   faceTargetSpeed: 5
   bullet: {fileID: 8777413897309509247, guid: a4e5b6f01b6b20440815831ff2bf0625, type: 3}
   shootRate: 2.5
