@@ -25,12 +25,14 @@ public class playerController : MonoBehaviour, IDamage, IForce
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
 
+
     float shootTimer;
 
     public int gravityOrig;
     public int jumpSpeedOrig;
     int HPOrig;
     int jumpCount;
+    int speedOrig;
 
     Vector3 moveDirection;
     public Vector3 playerVel;
@@ -48,7 +50,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
         jumpSpeedOrig = jumpSpeed;
         playerScaleOrig = transform.localScale;
         isJumping = false;
-        updatePlayerUI();
+        speedOrig = speed;
     }
 
 
@@ -90,6 +92,11 @@ public class playerController : MonoBehaviour, IDamage, IForce
         {
             Shoot();
             shootTimer = 0;
+        }
+        
+        if (speed <= 0)
+        {
+            StartCoroutine(resetSpeed());
         }
     }
 
@@ -167,7 +174,6 @@ public class playerController : MonoBehaviour, IDamage, IForce
                 playerVel = Vector3.zero;
             }
         }
-
     }
 
 
@@ -221,4 +227,26 @@ public class playerController : MonoBehaviour, IDamage, IForce
         return isJumping;
     }
 
+    public void takeSlow(int amount, float slowtime)
+    {
+        float slowTimer = 0;
+        slowTimer += Time.deltaTime;
+        speed /= amount;
+        if (slowTimer >= slowtime)
+        {
+            speed *= amount;
+        }
+
+        
+    }
+
+  IEnumerator resetSpeed()
+    {
+
+        yield return new WaitForSeconds(2.5f);
+        if (speed <= 0)
+        {
+            speed = speedOrig;
+        }
+    }
 }

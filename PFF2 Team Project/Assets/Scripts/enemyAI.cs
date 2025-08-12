@@ -70,7 +70,6 @@ public class enemyAI : MonoBehaviour, IDamage
         shootTimer = 0;
         Instantiate(bullet, shootPos.position, transform.rotation);
     }
-
     public void takeDamage(int amount)
     {
 
@@ -79,10 +78,8 @@ public class enemyAI : MonoBehaviour, IDamage
             HP -= amount;
             StartCoroutine(flashRed());
         }
-
         if (HP <= 0)
         {
-            GameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }
@@ -93,6 +90,7 @@ public class enemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
+
     public void takeSlow(int amount, float slowtime)
     {
         float slowTimer = 0;
