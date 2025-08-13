@@ -160,8 +160,10 @@ public class playerController : MonoBehaviour, IDamage, IForce
         {
             GameManager.instance.YouLose();
         }
-
-
+        else if (HP >= HPOrig)
+        {
+            Destroy(gameObject);
+        }
     }
     
     public void takeForce(Vector3 direction)
