@@ -201,9 +201,9 @@ public class playerController : MonoBehaviour, IDamage, IForce
         {
             GameManager.instance.YouLose();
         }
-        else if (HP >= HPOrig)
+        if (HP >= HPOrig)
         {
-            Destroy(gameObject);
+            HP = HPOrig;
         }
     }
     public void updatePlayerUI()
