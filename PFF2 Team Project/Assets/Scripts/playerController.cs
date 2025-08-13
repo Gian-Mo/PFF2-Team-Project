@@ -228,7 +228,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     
     public void takeForce(Vector3 direction)
     {
-                     
+        playerVel += direction;        
         
     }
 

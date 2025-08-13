@@ -21,9 +21,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (type == typeOfForce.toward) { 
-         direction = transform.position;
-        }
+     
     }
 
     // Update is called once per frame
@@ -35,50 +33,24 @@ public class NewMonoBehaviourScript : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        DefineDirection(other);
-        if (other.GetComponent<playerController>() != null)
-        {
-
-            
-
-            if (GameManager.instance.playerScript.IsJumping())
-            {
-                GameManager.instance.playerScript.playerVel = Vector3.forward;
-                GameManager.instance.playerScript.gravity = 0; 
-            }       
-          
-            
-        }
+        if (other.isTrigger) return;
+        DefineDirection(other);       
 
     }
 
 
     public void OnTriggerStay(Collider other)
-
     {
-        
- 
+        if (other.isTrigger) return;
         IForce force = other.GetComponent<IForce>();
+             
 
-
-        if (force != null && type == typeOfForce.toward)
-        {
-
-            force.takeForce(direction * Time.deltaTime);
-        }
+        force.takeForce(direction);
+     
 
     }
 
-    public void OnTriggerExit(Collider other)
-    {
-       
-       if (other.GetComponent<playerController>() != null)
-       {
-            GameManager.instance.playerScript.gravity = GameManager.instance.playerScript.gravityOrig;
-       }
-
-       
-    }
+    
 
     void DefineDirection(Collider other)
     {
