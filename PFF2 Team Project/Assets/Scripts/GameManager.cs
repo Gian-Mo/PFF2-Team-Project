@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-   public static GameManager instance;
+    public static GameManager instance;
 
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        
+
         instance = this;
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
@@ -38,12 +38,12 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    
+
 
     // Update is called once per frame
     void Update()
     {
-       if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
             {
@@ -79,13 +79,7 @@ public class GameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
-        if (gameGoalCount <= -1)
-        {
-            // you won
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(true);
-        }
+
     }
 
     public void YouLose()
@@ -93,5 +87,13 @@ public class GameManager : MonoBehaviour
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
+    }
+
+    public void YouWin()
+    {
+            // you won
+            statePause();
+            menuActive = menuWin;
+            menuActive.SetActive(true);
     }
 }
