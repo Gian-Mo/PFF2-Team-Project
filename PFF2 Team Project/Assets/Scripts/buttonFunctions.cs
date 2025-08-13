@@ -22,4 +22,9 @@ public class buttonFunctions : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    public void ClickOKToContinue()
+    {
+        GameManager.instance.stateUnpause();
+    }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 //TODOS
 // - Implement the player controller
 // - Implement the IDamage portion of it
@@ -15,11 +16,15 @@ public class playerController : MonoBehaviour, IDamage, IForce
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
+    [SerializeField] Transform headPos;
+    [SerializeField] GameObject projectile;
+    
     public int gravity;
 
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
+
 
     float shootTimer;
 
@@ -27,6 +32,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     public int jumpSpeedOrig;
     int HPOrig;
     int jumpCount;
+    int speedOrig;
 
     Vector3 moveDirection;
     public Vector3 playerVel;
@@ -44,6 +50,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
         jumpSpeedOrig = jumpSpeed;
         playerScaleOrig = transform.localScale;
         isJumping = false;
+        speedOrig = speed;
     }
 
 
@@ -71,8 +78,9 @@ public class playerController : MonoBehaviour, IDamage, IForce
         controller.Move(moveDirection * speed * Time.deltaTime);
 
        
-            Jump(); 
+        Jump(); 
         
+        WallRunning();
 
         controller.Move(playerVel * Time.deltaTime);
 
@@ -84,6 +92,11 @@ public class playerController : MonoBehaviour, IDamage, IForce
         {
             Shoot();
             shootTimer = 0;
+        }
+        
+        if (speed <= 0)
+        {
+            StartCoroutine(resetSpeed());
         }
     }
 
@@ -138,6 +151,33 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     }
 
+    void WallRunning()
+    {
+        RaycastHit left;
+        RaycastHit right;
+
+
+        if (Physics.Raycast(headPos.position, transform.right, out right, 1, ~ignoreLayer))
+        {
+            if (right.collider.CompareTag("CanWallRun"))
+            {
+                jumpCount = 0;
+                playerVel = Vector3.zero; 
+            }
+           
+        }
+        if (Physics.Raycast(headPos.position, -transform.right, out left, 1, ~ignoreLayer))
+        {
+            if (left.collider.CompareTag("CanWallRun"))
+            {
+                jumpCount = 0;
+                playerVel = Vector3.zero;
+            }
+        }
+    }
+
+
+
     void Crouch()
     {
         if (Input.GetButtonDown("Crouch"))
@@ -155,7 +195,8 @@ public class playerController : MonoBehaviour, IDamage, IForce
     public void takeDamage(int ammount)
     {
         HP -= ammount;
-
+        updatePlayerUI();
+        StartCoroutine(flashDamageScreen());
         if (HP <= 0)
         {
             GameManager.instance.YouLose();
@@ -165,20 +206,49 @@ public class playerController : MonoBehaviour, IDamage, IForce
             Destroy(gameObject);
         }
     }
+    public void updatePlayerUI()
+    {
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    IEnumerator flashDamageScreen()
+    {
+        GameManager.instance.playerDamageScreen.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.instance.playerDamageScreen.SetActive(false);
+    }
     
     public void takeForce(Vector3 direction)
     {
-        if (isJumping)
-        {
-            controller.Move(direction); 
-        }
-
-              
+                     
         
     }
 
   public bool IsJumping()
     {
         return isJumping;
+    }
+
+    public void takeSlow(int amount, float slowtime)
+    {
+        float slowTimer = 0;
+        slowTimer += Time.deltaTime;
+        speed /= amount;
+        if (slowTimer >= slowtime)
+        {
+            speed *= amount;
+        }
+
+        
+    }
+
+  IEnumerator resetSpeed()
+    {
+
+        yield return new WaitForSeconds(2.5f);
+        if (speed <= 0)
+        {
+            speed = speedOrig;
+        }
     }
 }
