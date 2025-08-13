@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
-        if (gameGoalCount <= 0)
+        if (gameGoalCount <= -1)
         {
             // you won
             statePause();

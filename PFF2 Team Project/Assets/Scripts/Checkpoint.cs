@@ -46,6 +46,7 @@ public class Checkpoint : MonoBehaviour
 
         if (dmg != null && type != healingType.HOT) {
             dmg.takeDamage(-healAmount);
+            Destroy(gameObject);
         }
         if (type == healingType.moving || type == healingType.homing)
         {
@@ -77,5 +78,6 @@ public class Checkpoint : MonoBehaviour
         d.takeDamage(-healAmount);
         yield return new WaitForSeconds(healRate);
         isHealing = false;
+        Destroy(gameObject);
     }
 }
