@@ -27,18 +27,18 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        
         instance = this;
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
-    }
 
-    void Start()
-    {
         statePause();
         menuActive = menuGameInstructions;
         menuActive.SetActive(true);
     }
+
+    
 
     // Update is called once per frame
     void Update()
