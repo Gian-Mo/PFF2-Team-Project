@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 5917692630976584314}
   - component: {fileID: 6219499952195879306}
   - component: {fileID: 4571772556543668980}
-  m_Layer: 0
-  m_Name: Bullet
+  m_Layer: 6
+  m_Name: Player Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   speed: 45
   destroyTime: 5
   slowtime: 0
-  ignoreLayer: 7
+  ignoreLayer: 65
 --- !u!135 &5917692630976584314
 SphereCollider:
   m_ObjectHideFlags: 0

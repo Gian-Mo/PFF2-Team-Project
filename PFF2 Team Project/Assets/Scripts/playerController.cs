@@ -17,6 +17,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] Transform headPos;
+    [SerializeField] Transform shootPos;
     [SerializeField] GameObject projectile;
     
     public int gravity;
@@ -90,7 +91,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
-            Shoot();
+            ShootProjectile();
             shootTimer = 0;
         }
         
@@ -127,8 +128,15 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     }
 
+    void ShootProjectile()
+    {
+       
 
-    void Shoot()
+       Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
+
+
+    }
+    void ShootRay()
     {
         RaycastHit hit;
         IDamage dmg = null;

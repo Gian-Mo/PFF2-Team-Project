@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEditor.UIElements;
 
 public class Damage : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Damage : MonoBehaviour
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
     [SerializeField] float slowtime;
+  
 
     bool isdamaging;
 
@@ -51,6 +53,8 @@ public class Damage : MonoBehaviour
             dmg.takeSlow(slowAmount, slowtime);
         }
         else if (dmg != null && type != damageType.DOT)
+
+        if (dmg != null && type != damageType.DOT)
         {
             dmg.takeDamage(damageAmount);
         }
