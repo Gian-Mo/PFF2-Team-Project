@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1665605028281526886}
   m_Layer: 0
   m_Name: Walkable Wall
-  m_TagString: Untagged
+  m_TagString: CanWallRun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,6 @@ MonoBehaviour:
   type: 0
   timeOfForce: 3
   speed: 10
-  trigger: {fileID: 9161225128010230933}
 --- !u!33 &768932798262289092
 MeshFilter:
   m_ObjectHideFlags: 0
