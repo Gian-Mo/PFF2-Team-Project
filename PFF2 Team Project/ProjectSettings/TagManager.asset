@@ -6,6 +6,7 @@ TagManager:
   tags:
   - End
   - CanWallRun
+  - Win
   layers:
   - Default
   - TransparentFX
