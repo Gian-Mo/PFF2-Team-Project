@@ -52,7 +52,7 @@ MonoBehaviour:
   slowAmount: 0
   damageAmount: 5
   damageRate: 0
-  speed: 45
+  speed: 60
   destroyTime: 5
   slowtime: 0
 --- !u!135 &5917692630976584314
