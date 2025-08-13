@@ -417,7 +417,7 @@ MonoBehaviour:
   jumpSpeed: 10
   headPos: {fileID: 2936697706718608472}
   shootPos: {fileID: 1107159228154338494}
-  projectile: {fileID: 8777413897309509247, guid: a4e5b6f01b6b20440815831ff2bf0625, type: 3}
+  projectile: {fileID: 8777413897309509247, guid: 212c5f71d6914db4daadde13733cf069, type: 3}
   gravity: 12
   shootDamage: 1
   shootRate: 1

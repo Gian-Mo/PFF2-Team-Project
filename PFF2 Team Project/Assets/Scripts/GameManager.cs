@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviour
     public playerController playerScript;
     public bool isPaused;
 
+
+   
+
     float timeScaleOrig;
 
     public int gameGoalCount;
@@ -27,10 +31,12 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-
+        
         instance = this;
         timeScaleOrig = Time.timeScale;
+       
         player = GameObject.FindWithTag("Player");
+        player.transform.position = SettingsManager.instance.spawnPosition;
         playerScript = player.GetComponent<playerController>();
 
         statePause();
@@ -79,21 +85,25 @@ public class GameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
+        gameGoalCountText.text = gameGoalCount.ToString();
 
+        if (gameGoalCount <= 0)
+        {
+            YouWin();
+        }
     }
-
-    public void YouLose()
-    {
-        statePause();
-        menuActive = menuLose;
-        menuActive.SetActive(true);
-    }
-
     public void YouWin()
     {
             // you won
             statePause();
             menuActive = menuWin;
-            menuActive.SetActive(true);
+            menuActive.SetActive(true);       
+    }
+
+public void YouLose()
+    {
+        statePause();
+        menuActive = menuLose;
+        menuActive.SetActive(true);
     }
 }

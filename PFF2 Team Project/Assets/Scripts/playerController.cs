@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 //TODOS
 // - Implement the player controller
 // - Implement the IDamage portion of it
@@ -249,6 +250,15 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
         
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Win"))
+        {
+            GameManager.instance.YouWin();
+        }
+    }
+    
 
   IEnumerator resetSpeed()
     {
