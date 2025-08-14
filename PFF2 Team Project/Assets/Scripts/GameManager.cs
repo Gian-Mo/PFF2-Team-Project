@@ -35,8 +35,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         timeScaleOrig = Time.timeScale;
        
-        player = GameObject.FindWithTag("Player");
-        player.transform.position = SettingsManager.instance.spawnPosition;
+        player = GameObject.FindWithTag("Player");       
         playerScript = player.GetComponent<playerController>();
 
         statePause();
