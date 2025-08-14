@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3164566316640908868}
+  - component: {fileID: 3235683262968654154}
   - component: {fileID: 9053470407530755531}
-  - component: {fileID: 3788820343274649287}
   - component: {fileID: 7550458359280018144}
   - component: {fileID: 4361529321809695766}
   - component: {fileID: 7160897479633106047}
@@ -36,15 +36,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &9053470407530755531
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5245232882405175449}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &3788820343274649287
+--- !u!114 &3235683262968654154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,15 +45,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5245232882405175449}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 776ada59689d138439c6a5b6d7562623, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d67083ffe72608468899e7c6c28ab54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  type: 1
   rb: {fileID: 0}
-  healAmount: 1
-  healRate: 0.5
+  slowAmount: 0
+  damageAmount: -10
+  damageRate: 0
   speed: 0
-  destoryTime: 0
+  destroyTime: 0
+  slowtime: 0
+--- !u!33 &9053470407530755531
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5245232882405175449}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &7550458359280018144
 MeshRenderer:
   m_ObjectHideFlags: 0
