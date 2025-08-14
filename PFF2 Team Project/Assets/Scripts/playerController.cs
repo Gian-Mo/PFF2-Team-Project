@@ -42,6 +42,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     bool isSprinting;
     bool isJumping;
+    float slowTimer;
 
 
 
@@ -63,6 +64,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     void Movement()
     {
         shootTimer += Time.deltaTime;
+        slowTimer += Time.deltaTime;
 
 
         if (controller.isGrounded)
@@ -96,9 +98,9 @@ public class playerController : MonoBehaviour, IDamage, IForce
             shootTimer = 0;
         }
         
-        if (speed <= 0)
+        if (slowTimer >= 2.5f && speed < speedOrig)
         {
-            StartCoroutine(resetSpeed());
+            resetSpeed();
         }
     }
 
@@ -240,8 +242,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     public void takeSlow(int amount, float slowtime)
     {
-        float slowTimer = 0;
-        slowTimer += Time.deltaTime;
+        slowTimer = 0;
         speed /= amount;
         if (slowTimer >= slowtime)
         {
@@ -260,13 +261,8 @@ public class playerController : MonoBehaviour, IDamage, IForce
     }
     
 
-  IEnumerator resetSpeed()
+    void resetSpeed()
     {
-
-        yield return new WaitForSeconds(2.5f);
-        if (speed <= 0)
-        {
-            speed = speedOrig;
-        }
+        speed = speedOrig;
     }
 }
