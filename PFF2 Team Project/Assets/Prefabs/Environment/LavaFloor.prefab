@@ -51,10 +51,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   rb: {fileID: 0}
+  slowAmount: 0
   damageAmount: 1000
   damageRate: 0.5
   speed: 0
   destroyTime: 0
+  slowtime: 0
 --- !u!114 &3870089709453190657
 MonoBehaviour:
   m_ObjectHideFlags: 0

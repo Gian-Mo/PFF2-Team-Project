@@ -974,7 +974,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791b3104570fe454eb79fd1afcfa3a23, type: 3}
---- !u!1001 &2020071893
+--- !u!1001 &2002080196
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1065,26 +1065,6 @@ PrefabInstance:
     - target: {fileID: 1552694172170397149, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2378618308328133853, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2378618308328133853, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2378618308328133853, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806056001165343078, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6137976465756792510, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: spawnPosition.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1210,7 +1190,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 933075506}
-  - {fileID: 2020071893}
+  - {fileID: 2002080196}
   - {fileID: 1106382538}
   - {fileID: 1842931875}
   - {fileID: 1268379224}

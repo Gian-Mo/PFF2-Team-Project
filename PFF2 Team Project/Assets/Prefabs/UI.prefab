@@ -1195,7 +1195,7 @@ MonoBehaviour:
   menuLose: {fileID: 4013818499408654540}
   menuGameInstructions: {fileID: 2276764965171400527}
   gameGoalCountText: {fileID: 2402159792908722580}
-  playerHPBar: {fileID: 6938827971258900206}
+  playerHPBar: {fileID: 7000783513559521193}
   playerDamageScreen: {fileID: 8820894277696276343}
   player: {fileID: 0}
   playerScript: {fileID: 0}
