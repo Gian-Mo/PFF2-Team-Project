@@ -86,10 +86,7 @@ public class GameManager : MonoBehaviour
         gameGoalCount += amount;
         gameGoalCountText.text = gameGoalCount.ToString();
 
-        if (gameGoalCount <= 0)
-        {
-            YouWin();
-        }
+      
     }
     public void YouWin()
     {
