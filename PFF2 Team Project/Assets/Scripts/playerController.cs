@@ -197,11 +197,11 @@ public class playerController : MonoBehaviour, IDamage, IForce
     {
         if (Input.GetButtonDown("Crouch"))
         {
-            transform.localScale = new Vector3(playerScaleOrig.x,(playerScaleOrig.y * 0.7f), playerScaleOrig.z); 
+            controller.height *= 0.5f;
         }
         if (Input.GetButtonUp("Crouch"))
         {
-            transform.localScale = playerScaleOrig;
+            controller.height /= 0.5f;
         }
 
 
