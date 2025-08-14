@@ -97,10 +97,14 @@ public class playerController : MonoBehaviour, IDamage, IForce
             ShootProjectile();
             shootTimer = 0;
         }
-        
+        if (speed <= 0)
+        {
+            FullSlowScreen();
+        }
         if (slowTimer >= 2.5f && speed < speedOrig)
         {
             resetSpeed();
+            FullSlowScreen();
         }
     }
 
@@ -228,6 +232,23 @@ public class playerController : MonoBehaviour, IDamage, IForce
         yield return new WaitForSeconds(0.1f);
         GameManager.instance.playerDamageScreen.SetActive(false);
     }
+    IEnumerator flashSlowScreen()
+    {
+        GameManager.instance.playerSlowScreen.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.instance.playerSlowScreen.SetActive(false);
+    }
+    void FullSlowScreen()
+    {
+        if (speed <= 0)
+        {
+            GameManager.instance.playerSlowScreen.SetActive(true);
+        }
+        else
+        {
+            GameManager.instance.playerSlowScreen.SetActive(false);
+        }
+    }
     
     public void takeForce(Vector3 direction)
     {
@@ -243,13 +264,12 @@ public class playerController : MonoBehaviour, IDamage, IForce
     public void takeSlow(int amount, float slowtime)
     {
         slowTimer = 0;
+        StartCoroutine(flashSlowScreen());
         speed /= amount;
         if (slowTimer >= slowtime)
         {
             speed *= amount;
         }
-
-        
     }
 
     void OnTriggerEnter(Collider other)
