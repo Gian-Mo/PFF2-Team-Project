@@ -5,6 +5,7 @@ public class lavaSet : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
     [SerializeField] float accel;
+    
 
     bool test;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
