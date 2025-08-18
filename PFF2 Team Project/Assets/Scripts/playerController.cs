@@ -26,8 +26,9 @@ public class playerController : MonoBehaviour, IDamage, IForce
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
+    [SerializeField] float pullRate;
 
-
+    
     float shootTimer;
 
     public int gravityOrig;
@@ -44,6 +45,10 @@ public class playerController : MonoBehaviour, IDamage, IForce
     bool isJumping;
     float slowTimer;
 
+    public bool canGetPulled;
+    Vector3 pullPosition;
+    int pullSpeed;
+    float pullTimer;
 
 
     void Start()
@@ -53,6 +58,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
         jumpSpeedOrig = jumpSpeed;
         playerScaleOrig = transform.localScale;
         isJumping = false;
+        canGetPulled = false;
         speedOrig = speed;
     }
 
@@ -65,6 +71,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     {
         shootTimer += Time.deltaTime;
         slowTimer += Time.deltaTime;
+        pullTimer += Time.deltaTime;
 
 
         if (controller.isGrounded)
@@ -81,9 +88,9 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
         controller.Move(moveDirection * speed * Time.deltaTime);
 
-       
-        Jump(); 
-        
+
+        Jump();
+
         WallRunning();
 
         controller.Move(playerVel * Time.deltaTime);
@@ -105,6 +112,11 @@ public class playerController : MonoBehaviour, IDamage, IForce
         {
             resetSpeed();
             FullSlowScreen();
+        }
+
+        if (canGetPulled)
+        {
+            GetPulled();
         }
     }
 
@@ -166,6 +178,32 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     }
 
+    void GetPulled()
+    {
+        
+        if (pullTimer >= pullRate)
+        {
+
+            if (Input.GetButtonDown("GetPulled"))
+            {
+               pullTimer = 0;
+
+                Vector3 pullDirection = pullPosition - transform.position;
+
+                takeForce(pullDirection.normalized * pullSpeed);
+
+            } 
+        }
+
+    }
+
+    public void SetPullVariables(bool can, Vector3 position, int speed)
+    {
+        canGetPulled = can;
+        pullPosition = position;
+        pullSpeed = speed;
+        
+    }
     void WallRunning()
     {
         RaycastHit left;

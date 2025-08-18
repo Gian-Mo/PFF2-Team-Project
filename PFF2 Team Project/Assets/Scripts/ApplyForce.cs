@@ -5,13 +5,14 @@ using UnityEngine;
 
 //TODOS
 // - FIgure This out;
-public class NewMonoBehaviourScript : MonoBehaviour
+public class ApplyForce : MonoBehaviour
 {
     public enum typeOfForce { toward, against }
     [SerializeField] typeOfForce type;
     [SerializeField] float timeOfForce;
     [SerializeField] float speed;
-  
+
+    public bool allowFromStart;
 
     Rigidbody targetRigidBody;
  
@@ -41,18 +42,22 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     public void OnTriggerStay(Collider other)
     {
-        if (other.isTrigger) return;
-        IForce force = other.GetComponent<IForce>();
-             
-
-        force.takeForce(direction);
-     
+        
+      TriggerStayFunc(other);
 
     }
 
+    public void TriggerStayFunc(Collider other)
+    {
+        if (other.isTrigger) return;
+        IForce force = other.GetComponent<IForce>();
+
+
+        force.takeForce(direction);
+    }
     
 
-    void DefineDirection(Collider other)
+    public void DefineDirection(Collider other)
     {
         if (type == typeOfForce.toward)
         {
@@ -66,6 +71,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     }
 
-  
+  public void SetType(typeOfForce newType)
+    {
+        type = newType;
+    }
 
 }
