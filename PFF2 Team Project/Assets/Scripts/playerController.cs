@@ -26,7 +26,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
-    [SerializeField] float pullRate;
+   public float pullRate;
 
     
     float shootTimer;
@@ -48,7 +48,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     public bool canGetPulled;
     Vector3 pullPosition;
     int pullSpeed;
-    float pullTimer;
+   public float pullTimer;
 
 
     void Start()
@@ -65,7 +65,12 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     void Update()
     {
-        Movement();
+        if (!GameManager.instance.isPaused)
+        {
+            Movement();
+        }
+
+        Sprint();
     }
     void Movement()
     {
@@ -93,9 +98,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
         WallRunning();
 
-        controller.Move(playerVel * Time.deltaTime);
-
-        Sprint();
+        controller.Move(playerVel * Time.deltaTime);      
 
         Crouch();
 

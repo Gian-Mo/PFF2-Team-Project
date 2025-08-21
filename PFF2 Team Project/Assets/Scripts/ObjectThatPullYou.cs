@@ -1,10 +1,13 @@
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class ObjectThatPullYou : MonoBehaviour
 {
     [SerializeField] GameObject keyToPress;
     [SerializeField] int speed;
+    [SerializeField] Image coolDown;
 
     bool onTriger;
     private void Update()
@@ -13,6 +16,7 @@ public class ObjectThatPullYou : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position); 
         }
+        FillFunctionality();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -34,4 +38,17 @@ public class ObjectThatPullYou : MonoBehaviour
     }
 
 
+    void FillFunctionality()
+    {
+        if (GameManager.instance.playerScript.pullTimer == 0)
+        {
+            coolDown.fillAmount = 1;
+           
+        }
+        else if(GameManager.instance.playerScript.pullTimer <= GameManager.instance.playerScript.pullRate)
+        {
+            coolDown.fillAmount -= (float) 1/ GameManager.instance.playerScript.pullRate * Time.deltaTime;
+        }
+        
+    }
 }
