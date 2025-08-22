@@ -45,10 +45,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     bool isJumping;
     float slowTimer;
 
-    public bool canGetPulled;
-    Vector3 pullPosition;
-    int pullSpeed;
-   public float pullTimer;
+   
 
 
     void Start()
@@ -57,8 +54,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
         gravityOrig = gravity;
         jumpSpeedOrig = jumpSpeed;
         playerScaleOrig = transform.localScale;
-        isJumping = false;
-        canGetPulled = false;
+        isJumping = false;        
         speedOrig = speed;
     }
 
@@ -76,7 +72,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     {
         shootTimer += Time.deltaTime;
         slowTimer += Time.deltaTime;
-        pullTimer += Time.deltaTime;
+        
 
 
         if (controller.isGrounded)
@@ -116,11 +112,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
             resetSpeed();
             FullSlowScreen();
         }
-
-        if (canGetPulled)
-        {
-            GetPulled();
-        }
+               
     }
 
     void Jump()
@@ -180,33 +172,9 @@ public class playerController : MonoBehaviour, IDamage, IForce
         }
 
     }
+   
 
-    void GetPulled()
-    {
-        
-        if (pullTimer >= pullRate)
-        {
-
-            if (Input.GetButtonDown("GetPulled"))
-            {
-               pullTimer = 0;
-
-                Vector3 pullDirection = pullPosition - transform.position;
-
-                takeForce(pullDirection.normalized * pullSpeed);
-
-            } 
-        }
-
-    }
-
-    public void SetPullVariables(bool can, Vector3 position, int speed)
-    {
-        canGetPulled = can;
-        pullPosition = position;
-        pullSpeed = speed;
-        
-    }
+  
     void WallRunning()
     {
         RaycastHit left;

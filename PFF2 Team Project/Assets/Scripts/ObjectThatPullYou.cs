@@ -3,51 +3,88 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class ObjectThatPullYou : MonoBehaviour
+public class ObjectThatPullYou : ApplyForce
 {
     [SerializeField] GameObject keyToPress;
-    [SerializeField] int speed;
     [SerializeField] Image coolDown;
+    [SerializeField] float pullRate;
+
+    float pullTimer;
 
     bool onTriger;
-    private void Update()
+    bool getPulled;
+
+    private void Start()
     {
-        if (onTriger)
-        {
-            transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position); 
-        }
-        FillFunctionality();
+       pullTimer = 0;
+        getPulled = false;
     }
 
-    public void OnTriggerEnter(Collider other)
-   {
+    private void Update()
+    {
+        FillFunctionality();
+        pullTimer += Time.deltaTime;
+
+        if (onTriger)
+        {
+            transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+        }
+        if (pullTimer >= pullRate)
+        {
+            if (Input.GetButtonDown("GetPulled"))
+            {
+                getPulled = true;
+            }
+        }
+    }
+
+    public override void OnTriggerEnter(Collider other)
+     {
         if (other.isTrigger || !other.CompareTag("Player")) return;
         keyToPress.SetActive(true);
-        onTriger = true;
-        GameManager.instance.playerScript.SetPullVariables(true,transform.position, speed);
+        onTriger = true;      
+       
 
-   }
-   public void OnTriggerExit(Collider other)
+    }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        if (other.isTrigger || !other.CompareTag("Player")) return;
+
+        if (getPulled)
+        {
+          pullTimer = 0;
+          DefineDirection();
+          TriggerStayFunc(other);
+          getPulled = false;
+        }
+      
+    }
+    public void OnTriggerExit(Collider other)
    {
         
         if (other.isTrigger || !other.CompareTag("Player")) return;
         keyToPress.SetActive(false);
         onTriger= false;
-        GameManager.instance.playerScript.SetPullVariables(false, transform.position, speed);
+       
 
     }
 
-
+    public void DefineDirection()
+    {
+       direction = transform.position - GameManager.instance.player.transform.position;
+        direction = direction.normalized * speed;
+    }
     void FillFunctionality()
     {
-        if (GameManager.instance.playerScript.pullTimer == 0)
+        if (pullTimer == 0)
         {
             coolDown.fillAmount = 1;
            
         }
-        else if(GameManager.instance.playerScript.pullTimer <= GameManager.instance.playerScript.pullRate)
+        else if(pullTimer <= pullRate)
         {
-            coolDown.fillAmount -= (float) 1/ GameManager.instance.playerScript.pullRate * Time.deltaTime;
+            coolDown.fillAmount -= (float) 1/ pullRate * Time.deltaTime;
         }
         
     }

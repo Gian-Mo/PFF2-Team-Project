@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1665605028281526886}
   m_Layer: 0
   m_Name: JumpPad
-  m_TagString: CanWallRun
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
   type: 1
   timeOfForce: 0
   speed: 5
+  allowFromStart: 0
 --- !u!33 &768932798262289092
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -124,7 +125,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.8, y: 0.8, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 1}
+  m_Center: {x: 0, y: 0, z: 1.3}
 --- !u!65 &1665605028281526886
 BoxCollider:
   m_ObjectHideFlags: 0
