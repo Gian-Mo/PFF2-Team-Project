@@ -7,13 +7,6 @@ public class lavaSet : MonoBehaviour
     [SerializeField] float accel;
     
 
-    bool test;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -25,6 +18,11 @@ public class lavaSet : MonoBehaviour
     void movement()
     {
         rb.linearVelocity = new Vector3(0f, speed, 0f);
+    }
+
+    public float GetLavaHeight()
+    {
+        return transform.position.y;
     }
 
 
