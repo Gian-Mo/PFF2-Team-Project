@@ -10,7 +10,8 @@ public class playerController : MonoBehaviour, IDamage, IForce
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
-
+    [SerializeField] GameObject wand;
+    [SerializeField] WandStats wandInfo;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -56,6 +57,8 @@ public class playerController : MonoBehaviour, IDamage, IForce
         playerScaleOrig = transform.localScale;
         isJumping = false;        
         speedOrig = speed;
+
+        SetWand();
     }
 
 
@@ -142,6 +145,15 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     }
 
+    void SetWand()
+    {
+        shootDamage = wandInfo.shootDamage;       
+        shootRate = wandInfo.shootRate;
+       projectile = wandInfo.bulletTypes[0];
+
+        wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
+        wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
+    }
     void ShootProjectile()
     {
        
@@ -263,12 +275,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     {
         playerVel += direction;        
         
-    }
-
-  public bool IsJumping()
-    {
-        return isJumping;
-    }
+    } 
 
     public void takeSlow(int amount, float slowtime)
     {

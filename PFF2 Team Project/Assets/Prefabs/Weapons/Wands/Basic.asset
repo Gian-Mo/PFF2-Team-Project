@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8554955a949a77d49b76d0f702b94066, type: 3}
+  m_Name: Basic
+  m_EditorClassIdentifier: 
+  model: {fileID: 6262986123301899059, guid: 8e26553eb7bc8f84e87ad5cbe258d7a2, type: 3}
+  bulletTypes:
+  - {fileID: 8777413897309509247, guid: 212c5f71d6914db4daadde13733cf069, type: 3}
+  shootDamage: 1
+  shootRate: 0.7
+  hitEffect: {fileID: 0}
+  shootSound: []
+  shootVol: 0
