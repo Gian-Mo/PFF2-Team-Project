@@ -24,7 +24,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     
     public int gravity;
 
-    [SerializeField] int shootDamage;
+    [SerializeField] int shootDamageMod;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
    public float pullRate;
@@ -147,7 +147,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     void SetWand()
     {
-        shootDamage = wandInfo.shootDamage;       
+        shootDamageMod = wandInfo.shootDamageMod;       
         shootRate = wandInfo.shootRate;
        projectile = wandInfo.bulletTypes[0];
 
@@ -179,7 +179,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
         if (dmg != null)
         {
 
-            dmg.takeDamage(shootDamage);
+            dmg.takeDamage(shootDamageMod);
 
         }
 
