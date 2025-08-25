@@ -6,7 +6,7 @@ using System.Collections;
 // - Implement the IDamage portion of it
 //
 
-public class playerController : MonoBehaviour, IDamage, IForce
+public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
@@ -232,7 +232,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     {
         HP -= ammount;
         updatePlayerUI();
-        StartCoroutine(flashDamageScreen());
+        GameManager.instance.FlashScreen(Color.red);
         if (HP <= 0)
         {
             GameManager.instance.YouLose();
@@ -247,27 +247,16 @@ public class playerController : MonoBehaviour, IDamage, IForce
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 
-    IEnumerator flashDamageScreen()
-    {
-        GameManager.instance.playerDamageScreen.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        GameManager.instance.playerDamageScreen.SetActive(false);
-    }
-    IEnumerator flashSlowScreen()
-    {
-        GameManager.instance.playerSlowScreen.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        GameManager.instance.playerSlowScreen.SetActive(false);
-    }
+   
     void FullSlowScreen()
     {
         if (speed <= 0)
         {
-            GameManager.instance.playerSlowScreen.SetActive(true);
+            GameManager.instance.playerFlashScreen.SetActive(true);
         }
         else
         {
-            GameManager.instance.playerSlowScreen.SetActive(false);
+            GameManager.instance.playerFlashScreen.SetActive(false);
         }
     }
     
@@ -280,7 +269,7 @@ public class playerController : MonoBehaviour, IDamage, IForce
     public void takeSlow(int amount, float slowtime)
     {
         slowTimer = 0;
-        StartCoroutine(flashSlowScreen());
+        GameManager.instance.FlashScreen(Color.cyan);
         speed /= amount;
         if (slowTimer >= slowtime)
         {
@@ -300,5 +289,11 @@ public class playerController : MonoBehaviour, IDamage, IForce
     void resetSpeed()
     {
         speed = speedOrig;
+    }
+
+    public void getGunStats(WandStats wand)
+    {
+        wandInfo = wand;
+        SetWand();
     }
 }

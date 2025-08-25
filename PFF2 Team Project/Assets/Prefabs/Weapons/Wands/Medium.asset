@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8554955a949a77d49b76d0f702b94066, type: 3}
-  m_Name: Basic
+  m_Name: Medium
   m_EditorClassIdentifier: 
-  model: {fileID: 6262986123301899059, guid: 8e26553eb7bc8f84e87ad5cbe258d7a2, type: 3}
+  model: {fileID: 2548421307829038991, guid: a976c1b6e1a7097458bb2765bcb0ab4d, type: 3}
   bulletTypes:
   - {fileID: 8777413897309509247, guid: 212c5f71d6914db4daadde13733cf069, type: 3}
   shootDamageMod: 1

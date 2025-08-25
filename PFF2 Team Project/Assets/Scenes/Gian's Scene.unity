@@ -1008,11 +1008,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c975759af85b75f4b80b467664bb9151, type: 3}
---- !u!1 &1458384072 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6315112688116486136, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-  m_PrefabInstance: {fileID: 1642360809}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1596129974
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,25 +1173,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4593252763514951770, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-      propertyPath: wand
-      value: 
-      objectReference: {fileID: 1458384072}
-    - target: {fileID: 4593252763514951770, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-      propertyPath: wandInfo
-      value: 
-      objectReference: {fileID: 11400000, guid: 86849c3a6d693384a8cab60b04965e13, type: 2}
     - target: {fileID: 5389894821283732074, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5522316906768461357, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7730361407627172583, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8742355882087074622, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1525,11 +1504,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3737839591127962242, guid: e86447dfc99b069408c824f7bd87b3b2, type: 3}
       propertyPath: m_Name
-      value: Wand_Basic
+      value: Wand_Basic_pickUp
       objectReference: {fileID: 0}
     - target: {fileID: 4077070348558960696, guid: e86447dfc99b069408c824f7bd87b3b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 65.26083
+      value: 36.394974
       objectReference: {fileID: 0}
     - target: {fileID: 4077070348558960696, guid: e86447dfc99b069408c824f7bd87b3b2, type: 3}
       propertyPath: m_LocalPosition.y

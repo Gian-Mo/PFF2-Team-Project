@@ -422,7 +422,7 @@ MonoBehaviour:
   shootPos: {fileID: 1107159228154338494}
   projectile: {fileID: 8777413897309509247, guid: 212c5f71d6914db4daadde13733cf069, type: 3}
   gravity: 12
-  shootDamage: 1
+  shootDamageMod: 0
   shootRate: 1
   shootDist: 20
   pullRate: 3

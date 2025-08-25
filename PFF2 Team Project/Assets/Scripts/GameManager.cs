@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
+
 
 
 public class GameManager : MonoBehaviour
@@ -15,15 +17,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text gameGoalCountText;
 
-    public Image playerHPBar;
-    public GameObject playerDamageScreen;
-    public GameObject playerSlowScreen;
+    public Image playerHPBar;   
+    public GameObject playerFlashScreen;   
     public GameObject player;
     public playerController playerScript;
     public bool isPaused;
 
 
-   
+
 
     float timeScaleOrig;
 
@@ -32,11 +33,11 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        
+
         instance = this;
         timeScaleOrig = Time.timeScale;
-       
-        player = GameObject.FindWithTag("Player");       
+
+        player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
 
         statePause();
@@ -87,20 +88,35 @@ public class GameManager : MonoBehaviour
         gameGoalCount += amount;
         gameGoalCountText.text = gameGoalCount.ToString();
 
-      
+
     }
     public void YouWin()
     {
-            // you won
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(true);       
+        // you won
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
     }
 
-public void YouLose()
+    public void YouLose()
     {
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
+    }
+
+   public void FlashScreen(Color color)
+    {
+        color.a = 0.3f;
+        playerFlashScreen.GetComponent<Image>().color = color;
+        
+
+        StartCoroutine(flashDamageScreen());
+    }
+    IEnumerator flashDamageScreen()
+    {
+        playerFlashScreen.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        playerFlashScreen.SetActive(false);
     }
 }
