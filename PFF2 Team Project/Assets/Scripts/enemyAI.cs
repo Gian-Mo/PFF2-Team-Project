@@ -14,8 +14,10 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
 
     Color colorOrig;
+    float shootRateOrig;
 
     float shootTimer;
+    float slowTimer;
 
     bool PlayerinTrigger;
 
@@ -25,12 +27,14 @@ public class enemyAI : MonoBehaviour, IDamage
     void Start()
     {
         colorOrig = model.material.color;
+        shootRateOrig = shootRate;
     }
 
     // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
+        slowTimer += Time.deltaTime;
         if (PlayerinTrigger)
         {
             playerDir = GameManager.instance.player.transform.position - transform.position;
@@ -40,6 +44,10 @@ public class enemyAI : MonoBehaviour, IDamage
                 shoot();
             }
             faceTarget();
+        }
+        if (slowTimer >= 2.5f && shootRate < shootRateOrig)
+        {
+            shootRate = shootRateOrig;
         }
     }
 
@@ -94,12 +102,6 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void takeSlow(int amount, float slowtime)
     {
-        float slowTimer = 0;
-        slowTimer += Time.deltaTime;
-        shootRate *= amount;
-        if (slowTimer >= slowtime)
-        {
-            shootRate /= amount;
-        }
+        shootRate /= amount;
     }
 }
