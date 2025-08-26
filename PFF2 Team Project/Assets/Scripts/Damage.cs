@@ -15,6 +15,7 @@ public class Damage : MonoBehaviour
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
     [SerializeField] float slowtime;
+    public float damageMultiplier;
   
 
     bool isdamaging;
