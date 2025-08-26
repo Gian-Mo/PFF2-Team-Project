@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Medium
   m_EditorClassIdentifier: 
   model: {fileID: 2548421307829038991, guid: a976c1b6e1a7097458bb2765bcb0ab4d, type: 3}
-  bulletTypes:
-  - {fileID: 8777413897309509247, guid: 212c5f71d6914db4daadde13733cf069, type: 3}
-  shootDamageMod: 1
-  shootRate: 0.7
+  shootDamageMod: 2
+  shootRate: 0.6
   hitEffect: {fileID: 0}
   shootSound: []
   shootVol: 0

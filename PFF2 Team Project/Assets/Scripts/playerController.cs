@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //TODOS
 // - Implement the player controller
@@ -12,6 +13,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     [SerializeField] CharacterController controller;
     [SerializeField] GameObject wand;
     [SerializeField] WandStats wandInfo;
+    public List<GameObject> spellTypes;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -94,6 +96,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         controller.Move(moveDirection * speed * Time.deltaTime);
 
 
+
         Jump();
 
         WallRunning();
@@ -155,7 +158,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     {
         meleeDamageMod = wandInfo.shootDamageMod;       
         shootRate = wandInfo.shootRate;
-       projectile = wandInfo.bulletTypes[0];
+        projectile = spellTypes[0];
 
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
@@ -194,6 +197,14 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
         }
 
+
+    }
+
+    void AlternateSpell()
+    {
+       //Add spell randomly to a list and shoot them in that order
+
+        // The chances will vary per type of wand
 
     }
     IEnumerator MeleeAttack(Vector3 move)
@@ -320,6 +331,8 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         wandInfo = wand;
        
         SetWand();
+
+        
     }
 
     

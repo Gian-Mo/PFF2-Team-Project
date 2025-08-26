@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Basic
   m_EditorClassIdentifier: 
   model: {fileID: 6262986123301899059, guid: 8e26553eb7bc8f84e87ad5cbe258d7a2, type: 3}
-  bulletTypes:
-  - {fileID: 8777413897309509247, guid: 44f2c1bbe8ed83f44912cb9456cc0dfe, type: 3}
   shootDamageMod: 1
   shootRate: 0.7
   hitEffect: {fileID: 0}
