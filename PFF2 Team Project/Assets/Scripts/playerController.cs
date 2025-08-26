@@ -24,9 +24,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     
     public int gravity;
 
-    [SerializeField] int shootDamageMod;
+    [SerializeField] int meleeDamageMod;
     [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
+    [SerializeField] int meleeDist;
    public float pullRate;
 
     
@@ -107,6 +107,11 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             ShootProjectile();
             shootTimer = 0;
         }
+        if (Input.GetButton("Melee") && shootTimer >= shootRate)
+        {
+            Melee();
+            shootTimer = 0;
+        }
         if (speed <= 0)
         {
             FullSlowScreen();
@@ -148,7 +153,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     void SetWand()
     {
-        shootDamageMod = wandInfo.shootDamageMod;       
+        meleeDamageMod = wandInfo.shootDamageMod;       
         shootRate = wandInfo.shootRate;
        projectile = wandInfo.bulletTypes[0];
 
@@ -157,37 +162,58 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     }
     void ShootProjectile()
     {
-       
+        Vector3 rotation = new Vector3(30, 0, 0);
+        StartCoroutine(ShootAttack(rotation));
 
-       Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
+       GameObject spell = Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
+        spell.GetComponent<Damage>().damageMultiplier = wandInfo.shootDamageMod;
 
 
     }
-    void ShootRay()
+    void Melee()
     {
         RaycastHit hit;
         IDamage dmg = null;
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward);
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, meleeDist, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
 
             dmg = hit.collider.GetComponent<IDamage>();
         }
 
-
+        Vector3 move = new Vector3(0,0,0.5f);
+        StartCoroutine(MeleeAttack(move));
 
         if (dmg != null)
         {
 
-            dmg.takeDamage(shootDamageMod);
+            dmg.takeDamage(meleeDamageMod);
 
         }
 
-    }
-   
 
-  
+    }
+    IEnumerator MeleeAttack(Vector3 move)
+    {
+        wand.transform.localPosition += move;
+
+        yield return new WaitForSeconds(0.1f) ;
+
+        wand.transform.localPosition -= move;
+    }
+    IEnumerator ShootAttack(Vector3 rotation)
+    {
+        
+        wand.transform.Rotate(rotation) ;
+
+        yield return new WaitForSeconds(0.1f);
+
+        wand.transform.Rotate(-rotation);
+    }
+
     void WallRunning()
     {
         RaycastHit left;
@@ -292,6 +318,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     public void getGunStats(WandStats wand)
     {
         wandInfo = wand;
+       
         SetWand();
     }
+
+    
 }
