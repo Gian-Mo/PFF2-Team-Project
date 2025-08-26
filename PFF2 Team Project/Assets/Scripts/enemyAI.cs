@@ -18,6 +18,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     float shootTimer;
     float slowTimer;
+    float slowTime;
 
     bool PlayerinTrigger;
 
@@ -45,7 +46,7 @@ public class enemyAI : MonoBehaviour, IDamage
             }
             faceTarget();
         }
-        if (slowTimer >= 2.5f && shootRate < shootRateOrig)
+        if (slowTimer >= slowTime && shootRate >= shootRateOrig)
         {
             shootRate = shootRateOrig;
         }
@@ -102,6 +103,8 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void takeSlow(int amount, float slowtime)
     {
-        shootRate /= amount;
+        slowTimer = 0;
+        shootRate *= amount;
+        slowTime = slowtime;
     }
 }

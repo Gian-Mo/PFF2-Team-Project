@@ -45,6 +45,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     bool isSprinting;
     bool isJumping;
     float slowTimer;
+    float slowTime;
 
    
 
@@ -110,7 +111,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         {
             FullSlowScreen();
         }
-        if (slowTimer >= 2.5f && speed < speedOrig)
+        if (slowTimer >= slowTime && speed < speedOrig)
         {
             resetSpeed();
             FullSlowScreen();
@@ -269,12 +270,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     public void takeSlow(int amount, float slowtime)
     {
         slowTimer = 0;
+        slowTime = slowtime;
         GameManager.instance.FlashScreen(Color.cyan);
         speed /= amount;
-        if (slowTimer >= slowtime)
-        {
-            speed *= amount;
-        }
     }
 
     void OnTriggerEnter(Collider other)
