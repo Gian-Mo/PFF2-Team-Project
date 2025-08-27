@@ -52,11 +52,12 @@ MonoBehaviour:
   type: 0
   rb: {fileID: 6219499952195879306}
   slowAmount: 0
-  damageAmount: 3
+  damageAmount: 7
   damageRate: 0
   speed: 60
   destroyTime: 1
   slowtime: 0
+  damageMultiplier: 0
 --- !u!135 &5917692630976584314
 SphereCollider:
   m_ObjectHideFlags: 0

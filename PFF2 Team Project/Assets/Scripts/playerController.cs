@@ -168,6 +168,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         Vector3 rotation = new Vector3(30, 0, 0);
         StartCoroutine(ShootAttack(rotation));
 
+        AlternateSpell();
        GameObject spell = Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
         spell.GetComponent<Damage>().damageMultiplier = wandInfo.shootDamageMod;
 
@@ -202,9 +203,24 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     void AlternateSpell()
     {
-       //Add spell randomly to a list and shoot them in that order
+        //Add spell randomly to a list and shoot them in that order
 
         // The chances will vary per type of wand
+
+        int index = Random.Range(1, 101);
+
+        if (index < 71)
+        {
+            projectile = spellTypes[0];
+        }
+        else if (index < 91)
+        {
+            projectile = spellTypes[1];
+        }
+        else if (index < 101)
+        {
+            projectile = spellTypes[2];
+        }
 
     }
     IEnumerator MeleeAttack(Vector3 move)

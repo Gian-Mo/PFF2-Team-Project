@@ -50,7 +50,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             FullSlowScreen();
         }
-        if (slowTimer >= slowTime && shootRate >= shootRateOrig)
+        if (slowTimer >= slowTime && shootRate > shootRateOrig)
         {
             shootRate = shootRateOrig;
             FullSlowScreen();
