@@ -46,9 +46,14 @@ public class enemyAI : MonoBehaviour, IDamage
             }
             faceTarget();
         }
+        if (shootRate >= 10)
+        {
+            FullSlowScreen();
+        }
         if (slowTimer >= slowTime && shootRate >= shootRateOrig)
         {
             shootRate = shootRateOrig;
+            FullSlowScreen();
         }
     }
 
@@ -103,8 +108,26 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void takeSlow(int amount, float slowtime)
     {
+        StartCoroutine(flashBlue());
         slowTimer = 0;
         shootRate *= amount;
         slowTime = slowtime;
+    }
+    IEnumerator flashBlue()
+    {
+        model.material.color = Color.blue;
+        yield return new WaitForSeconds(0.1f);
+        model.material.color = colorOrig;
+    }
+    void FullSlowScreen()
+    {
+        if (shootRate > shootRateOrig)
+        {
+            model.material.color = Color.blue;
+        }
+        else
+        {
+            model.material.color = colorOrig;
+        }
     }
 }
