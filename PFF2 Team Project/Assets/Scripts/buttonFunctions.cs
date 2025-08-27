@@ -41,7 +41,5 @@ public class buttonFunctions : MonoBehaviour
     public void ClickOKToContinue()
     {
         GameManager.instance.stateUnpause();
-        GameManager.instance.playerScript.wandInfo.bulletTypes.Add(GameManager.instance.heavySpell);
-        GameManager.instance.playerScript.wandInfo.bulletTypes.Add(GameManager.instance.slowSpell);
     }
 }

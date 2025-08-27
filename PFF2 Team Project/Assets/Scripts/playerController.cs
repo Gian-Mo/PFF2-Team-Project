@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 //TODOS
 // - Implement the player controller
@@ -12,12 +11,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
     [SerializeField] GameObject wand;
-<<<<<<< HEAD
    public WandStats wandInfo;
-=======
-    [SerializeField] WandStats wandInfo;
-    public List<GameObject> spellTypes;
->>>>>>> 07b0daa724c86a32f3c3b2e3ae77bb78e7c571f0
 
     [SerializeField] public int HP;
     [SerializeField] public int speed;
@@ -32,23 +26,17 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     [SerializeField] int meleeDamageMod;
     [SerializeField] float shootRate;
-<<<<<<< HEAD
-    [SerializeField] int shootDist;
-    float healTimer;
-    float speedTimer;
-    public float healTimerMax;
-    public float speedTimerMax;
-    public bool isSpeedBoosting;
-    public bool isHealing;
-    public float pullRate;
-
-=======
     [SerializeField] int meleeDist;
    public float pullRate;
->>>>>>> d3f90620edb213ffbfe106ece06eb2508a97d6e4
+
 
     float shootTimer;
-
+    public float healTimer;
+    public float speedTimer;
+    public float speedTimerMax;
+    public float healTimerMax;
+    public bool isHealing;
+    public bool isSpeedBoosting;
     public int gravityOrig;
     public int jumpSpeedOrig;
     public int HPOrig;
@@ -111,7 +99,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         moveDirection = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
 
         controller.Move(moveDirection * speed * Time.deltaTime);
-
 
 
         Jump();
@@ -181,36 +168,22 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     void SetWand()
     {
-<<<<<<< HEAD
-        shootDamageMod = wandInfo.shootDamageMod;
-=======
         meleeDamageMod = wandInfo.shootDamageMod;       
->>>>>>> d3f90620edb213ffbfe106ece06eb2508a97d6e4
         shootRate = wandInfo.shootRate;
-<<<<<<< HEAD
-        projectile = wandInfo.bulletTypes[0];
-=======
-        projectile = spellTypes[0];
->>>>>>> 07b0daa724c86a32f3c3b2e3ae77bb78e7c571f0
+       //projectile = wandInfo.bulletTypes[0];
 
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
     }
     void ShootProjectile()
     {
-<<<<<<< HEAD
-
-
-        Instantiate(projectile, shootPos.position, Camera.main.transform.rotation);
-=======
         Vector3 rotation = new Vector3(30, 0, 0);
         StartCoroutine(ShootAttack(rotation));
 
-        AlternateSpell();
        GameObject spell = Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
         spell.GetComponent<Damage>().damageMultiplier = wandInfo.shootDamageMod;
->>>>>>> d3f90620edb213ffbfe106ece06eb2508a97d6e4
 
+       Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
 
     }
     void Melee()
@@ -237,34 +210,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
         }
 
-<<<<<<< HEAD
-    }
-
-
-=======
-
-    }
-
-    void AlternateSpell()
-    {
-        //Add spell randomly to a list and shoot them in that order
-
-        // The chances will vary per type of wand
-
-        int index = Random.Range(1, 101);
-
-        if (index < 71)
-        {
-            projectile = spellTypes[0];
-        }
-        else if (index < 91)
-        {
-            projectile = spellTypes[1];
-        }
-        else if (index < 101)
-        {
-            projectile = spellTypes[2];
-        }
 
     }
     IEnumerator MeleeAttack(Vector3 move)
@@ -284,7 +229,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
         wand.transform.Rotate(-rotation);
     }
->>>>>>> d3f90620edb213ffbfe106ece06eb2508a97d6e4
 
     void WallRunning()
     {
@@ -392,8 +336,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         wandInfo = wand;
        
         SetWand();
-
-        
     }
 
     
