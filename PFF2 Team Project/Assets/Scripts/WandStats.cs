@@ -13,5 +13,4 @@ public class WandStats : ScriptableObject
     public ParticleSystem hitEffect;
     public AudioClip[] shootSound;
     [Range(0, 1)] public float shootVol;
-
 }

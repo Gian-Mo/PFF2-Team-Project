@@ -11,43 +11,47 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
     [SerializeField] GameObject wand;
-    [SerializeField] WandStats wandInfo;
+   public WandStats wandInfo;
 
-    [SerializeField] int HP;
-    [SerializeField] int speed;
+    [SerializeField] public int HP;
+    [SerializeField] public int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] Transform headPos;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject projectile;
-    
+
     public int gravity;
 
     [SerializeField] int shootDamageMod;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
-   public float pullRate;
+    float healTimer;
+    float speedTimer;
+    public float healTimerMax;
+    public float speedTimerMax;
+    public bool isSpeedBoosting;
+    public bool isHealing;
+    public float pullRate;
 
-    
+
     float shootTimer;
 
     public int gravityOrig;
     public int jumpSpeedOrig;
-    int HPOrig;
+    public int HPOrig;
     int jumpCount;
     int speedOrig;
-
     Vector3 moveDirection;
     public Vector3 playerVel;
     Vector3 playerScaleOrig;
-
     bool isSprinting;
     bool isJumping;
     float slowTimer;
     float slowTime;
 
-   
+
 
 
     void Start()
@@ -56,7 +60,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         gravityOrig = gravity;
         jumpSpeedOrig = jumpSpeed;
         playerScaleOrig = transform.localScale;
-        isJumping = false;        
+        isJumping = false;
         speedOrig = speed;
 
         SetWand();
@@ -76,7 +80,11 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     {
         shootTimer += Time.deltaTime;
         slowTimer += Time.deltaTime;
-        
+        if (isSpeedBoosting)
+        {
+            speedTimer += Time.deltaTime;
+        }
+        if (isHealing) { healTimer += Time.deltaTime; }
 
 
         if (controller.isGrounded)
@@ -98,7 +106,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
         WallRunning();
 
-        controller.Move(playerVel * Time.deltaTime);      
+        controller.Move(playerVel * Time.deltaTime);
 
         Crouch();
 
@@ -116,7 +124,15 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             resetSpeed();
             FullSlowScreen();
         }
-               
+        if(healTimer >= healTimerMax)
+        {
+            HP = HPOrig;
+        }
+        if(speedTimer >= speedTimerMax)
+        {
+            speed = speedOrig;
+        }
+
     }
 
     void Jump()
@@ -148,18 +164,18 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     void SetWand()
     {
-        shootDamageMod = wandInfo.shootDamageMod;       
+        shootDamageMod = wandInfo.shootDamageMod;
         shootRate = wandInfo.shootRate;
-       projectile = wandInfo.bulletTypes[0];
+        projectile = wandInfo.bulletTypes[0];
 
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
     }
     void ShootProjectile()
     {
-       
 
-       Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
+
+        Instantiate(projectile, shootPos.position, Camera.main.transform.rotation);
 
 
     }
@@ -185,9 +201,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         }
 
     }
-   
 
-  
+
+
     void WallRunning()
     {
         RaycastHit left;
@@ -199,9 +215,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             if (right.collider.CompareTag("CanWallRun"))
             {
                 jumpCount = 0;
-                playerVel = Vector3.zero; 
+                playerVel = Vector3.zero;
             }
-           
+
         }
         if (Physics.Raycast(headPos.position, -transform.right, out left, 1, ~ignoreLayer))
         {
@@ -248,7 +264,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 
-   
+
     void FullSlowScreen()
     {
         if (speed <= 0)
@@ -260,12 +276,12 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             GameManager.instance.playerFlashScreen.SetActive(false);
         }
     }
-    
+
     public void takeForce(Vector3 direction)
     {
-        playerVel += direction;        
-        
-    } 
+        playerVel += direction;
+
+    }
 
     public void takeSlow(int amount, float slowtime)
     {
@@ -282,7 +298,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             GameManager.instance.YouWin();
         }
     }
-    
+
 
     void resetSpeed()
     {

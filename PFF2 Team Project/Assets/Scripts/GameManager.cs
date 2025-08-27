@@ -17,12 +17,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text gameGoalCountText;
 
-    public Image playerHPBar;   
-    public GameObject playerFlashScreen;   
+    public Image playerHPBar;
+    public GameObject heavySpell;
+    public GameObject slowSpell;
+    public GameObject playerFlashScreen;
     public GameObject player;
     public playerController playerScript;
     public bool isPaused;
-
 
 
 
@@ -105,11 +106,11 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-   public void FlashScreen(Color color)
+    public void FlashScreen(Color color)
     {
         color.a = 0.3f;
         playerFlashScreen.GetComponent<Image>().color = color;
-        
+
 
         StartCoroutine(flashDamageScreen());
     }

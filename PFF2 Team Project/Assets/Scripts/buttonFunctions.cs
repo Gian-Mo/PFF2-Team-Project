@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
@@ -13,6 +14,13 @@ public class buttonFunctions : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameManager.instance.stateUnpause();
     }
+    public void Heal()
+    {
+        GameManager.instance.playerScript.HP += 3;
+        GameManager.instance.playerScript.isHealing = true;
+        GameManager.instance.playerScript.updatePlayerUI();
+        GameManager.instance.stateUnpause();
+    }
 
     public void quit()
     {
@@ -23,8 +31,17 @@ public class buttonFunctions : MonoBehaviour
 #endif
     }
 
+    public void SpeedUpgrade()
+    {
+        GameManager.instance.playerScript.speed += 1;
+        GameManager.instance.playerScript.isSpeedBoosting = true;
+        GameManager.instance.stateUnpause();
+    }
+
     public void ClickOKToContinue()
     {
         GameManager.instance.stateUnpause();
+        GameManager.instance.playerScript.wandInfo.bulletTypes.Add(GameManager.instance.heavySpell);
+        GameManager.instance.playerScript.wandInfo.bulletTypes.Add(GameManager.instance.slowSpell);
     }
 }

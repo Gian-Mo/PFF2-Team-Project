@@ -1196,6 +1196,8 @@ MonoBehaviour:
   menuGameInstructions: {fileID: 2276764965171400527}
   gameGoalCountText: {fileID: 2402159792908722580}
   playerHPBar: {fileID: 7000783513559521193}
+  heavySpell: {fileID: 8777413897309509247, guid: 5188cd43072563a48aa3006782173e85, type: 3}
+  slowSpell: {fileID: 8777413897309509247, guid: 44f2c1bbe8ed83f44912cb9456cc0dfe, type: 3}
   playerFlashScreen: {fileID: 3167658266218524319}
   player: {fileID: 0}
   playerScript: {fileID: 0}
