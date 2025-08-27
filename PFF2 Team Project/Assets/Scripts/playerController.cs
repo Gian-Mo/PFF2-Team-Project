@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //TODOS
 // - Implement the player controller
@@ -11,7 +12,12 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
     [SerializeField] GameObject wand;
+<<<<<<< HEAD
    public WandStats wandInfo;
+=======
+    [SerializeField] WandStats wandInfo;
+    public List<GameObject> spellTypes;
+>>>>>>> 07b0daa724c86a32f3c3b2e3ae77bb78e7c571f0
 
     [SerializeField] public int HP;
     [SerializeField] public int speed;
@@ -107,6 +113,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         controller.Move(moveDirection * speed * Time.deltaTime);
 
 
+
         Jump();
 
         WallRunning();
@@ -180,7 +187,11 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         meleeDamageMod = wandInfo.shootDamageMod;       
 >>>>>>> d3f90620edb213ffbfe106ece06eb2508a97d6e4
         shootRate = wandInfo.shootRate;
+<<<<<<< HEAD
         projectile = wandInfo.bulletTypes[0];
+=======
+        projectile = spellTypes[0];
+>>>>>>> 07b0daa724c86a32f3c3b2e3ae77bb78e7c571f0
 
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
@@ -195,6 +206,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         Vector3 rotation = new Vector3(30, 0, 0);
         StartCoroutine(ShootAttack(rotation));
 
+        AlternateSpell();
        GameObject spell = Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
         spell.GetComponent<Damage>().damageMultiplier = wandInfo.shootDamageMod;
 >>>>>>> d3f90620edb213ffbfe106ece06eb2508a97d6e4
@@ -230,6 +242,29 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
 
 =======
+
+    }
+
+    void AlternateSpell()
+    {
+        //Add spell randomly to a list and shoot them in that order
+
+        // The chances will vary per type of wand
+
+        int index = Random.Range(1, 101);
+
+        if (index < 71)
+        {
+            projectile = spellTypes[0];
+        }
+        else if (index < 91)
+        {
+            projectile = spellTypes[1];
+        }
+        else if (index < 101)
+        {
+            projectile = spellTypes[2];
+        }
 
     }
     IEnumerator MeleeAttack(Vector3 move)
@@ -357,6 +392,8 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         wandInfo = wand;
        
         SetWand();
+
+        
     }
 
     
