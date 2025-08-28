@@ -1291,22 +1291,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4593252763514951770, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-      propertyPath: spellTypes.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4593252763514951770, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-      propertyPath: 'spellTypes.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8777413897309509247, guid: 212c5f71d6914db4daadde13733cf069, type: 3}
-    - target: {fileID: 4593252763514951770, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-      propertyPath: 'spellTypes.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8777413897309509247, guid: 5188cd43072563a48aa3006782173e85, type: 3}
-    - target: {fileID: 4593252763514951770, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
-      propertyPath: 'spellTypes.Array.data[2]'
-      value: 
-      objectReference: {fileID: 8777413897309509247, guid: 44f2c1bbe8ed83f44912cb9456cc0dfe, type: 3}
     - target: {fileID: 5389894821283732074, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
       propertyPath: m_Name
       value: Player
