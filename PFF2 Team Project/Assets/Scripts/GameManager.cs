@@ -19,10 +19,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text gameHeightCountText;
 
     public Image playerHPBar;
+    public GameObject heavySpell;
+    public GameObject slowSpell;
     public GameObject playerFlashScreen;
     public GameObject player;
     public playerController playerScript;
     public bool isPaused;
+
+
+
+
+
+
+
 
 
     float timeScaleOrig;

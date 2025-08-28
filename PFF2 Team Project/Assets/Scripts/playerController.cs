@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //TODOS
 // - Implement the player controller
@@ -11,10 +12,11 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
     [SerializeField] GameObject wand;
-    [SerializeField] WandStats wandInfo;
+   public WandStats wandInfo;
+    public List<GameObject> spellTypes;
 
-    [SerializeField] int HP;
-    [SerializeField] int speed;
+    [SerializeField] public int HP;
+    [SerializeField] public int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
@@ -24,27 +26,32 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     public int gravity;
 
-    [SerializeField] int shootDamageMod;
+    [SerializeField] int meleeDamageMod;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] float fallThreshold;
     public float pullRate;
 
-    float shootTimer;
 
+    float shootTimer;
+    public float healTimer;
+    public float speedTimer;
+    public float speedTimerMax;
+    public float healTimerMax;
+    public bool isHealing;
+    public bool isSpeedBoosting;
     public int gravityOrig;
     public int jumpSpeedOrig;
-    int HPOrig;
+    public int HPOrig;
     int jumpCount;
     int speedOrig;
-
     Vector3 moveDirection;
     public Vector3 playerVel;
     Vector3 playerScaleOrig;
-
     bool isSprinting;
     bool isJumping;
     float slowTimer;
+    float slowTime;
 
     bool hasJumped = false;
     float groundY;
@@ -103,7 +110,11 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     {
         shootTimer += Time.deltaTime;
         slowTimer += Time.deltaTime;
-
+        if (isSpeedBoosting)
+        {
+            speedTimer += Time.deltaTime;
+        }
+        if (isHealing) { healTimer += Time.deltaTime; }
 
 
         if (controller.isGrounded)
@@ -134,14 +145,27 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             ShootProjectile();
             shootTimer = 0;
         }
+        if (Input.GetButton("Melee") && shootTimer >= shootRate)
+        {
+            Melee();
+            shootTimer = 0;
+        }
         if (speed <= 0)
         {
             FullSlowScreen();
         }
-        if (slowTimer >= 2.5f && speed < speedOrig)
+        if (slowTimer >= slowTime && speed < speedOrig)
         {
             resetSpeed();
             FullSlowScreen();
+        }
+        if(healTimer >= healTimerMax)
+        {
+            HP = HPOrig;
+        }
+        if(speedTimer >= speedTimerMax)
+        {
+            speed = speedOrig;
         }
 
     }
@@ -174,7 +198,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     void SetWand()
     {
-        shootDamageMod = wandInfo.shootDamageMod;
+        meleeDamageMod = wandInfo.shootDamageMod;       
         shootRate = wandInfo.shootRate;
         projectile = wandInfo.bulletTypes[0];
 
@@ -184,34 +208,78 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     void ShootProjectile()
     {
-
-
-        Instantiate(projectile, shootPos.position, Camera.main.transform.rotation);
-
+        Vector3 rotation = new Vector3(30, 0, 0);
+        StartCoroutine(ShootAttack(rotation));      
+        AlternateSpell();      
+       GameObject spell = Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
+        spell.GetComponent<Damage>().damageMultiplier = wandInfo.shootDamageMod;      
 
     }
-
-    void ShootRay()
+    void Melee()
     {
         RaycastHit hit;
         IDamage dmg = null;
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward);
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, meleeDist, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
 
             dmg = hit.collider.GetComponent<IDamage>();
         }
 
-
+        Vector3 move = new Vector3(0,0,0.5f);
+        StartCoroutine(MeleeAttack(move));
 
         if (dmg != null)
         {
 
-            dmg.takeDamage(shootDamageMod);
+            dmg.takeDamage(meleeDamageMod);
 
         }
 
+
+    }
+
+    void AlternateSpell()
+    {
+        //Add spell randomly to a list and shoot them in that order
+
+        // The chances will vary per type of wand
+
+        int index = Random.Range(1, 101);
+
+        if (index < 71)
+        {
+            projectile = spellTypes[0];
+        }
+        else if (index < 91)
+        {
+            projectile = spellTypes[1];
+        }
+        else if (index < 101)
+        {
+            projectile = spellTypes[2];
+        }
+
+    }
+    IEnumerator MeleeAttack(Vector3 move)
+    {
+        wand.transform.localPosition += move;
+
+        yield return new WaitForSeconds(0.1f) ;
+
+        wand.transform.localPosition -= move;
+    }
+    IEnumerator ShootAttack(Vector3 rotation)
+    {
+        
+        wand.transform.Rotate(rotation) ;
+
+        yield return new WaitForSeconds(0.1f);
+
+        wand.transform.Rotate(-rotation);
     }
 
     void WallRunning()
@@ -294,12 +362,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     public void takeSlow(int amount, float slowtime)
     {
         slowTimer = 0;
+        slowTime = slowtime;
         GameManager.instance.FlashScreen(Color.cyan);
         speed /= amount;
-        if (slowTimer >= slowtime)
-        {
-            speed *= amount;
-        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -319,6 +384,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     public void getGunStats(WandStats wand)
     {
         wandInfo = wand;
+       
         SetWand();
     }
+
+    
 }
