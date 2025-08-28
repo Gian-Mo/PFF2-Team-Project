@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuUpgrade;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuGameInstructions; 
     [SerializeField] GameObject WandUpgradeScreen;
@@ -80,6 +81,14 @@ public class GameManager : MonoBehaviour
 
          
         }
+    }
+
+    public void Upgrade()
+    {
+       
+        statePause();
+        menuActive = menuUpgrade;
+        menuActive.SetActive(true);
     }
 
     public void statePause()

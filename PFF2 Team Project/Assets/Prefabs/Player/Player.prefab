@@ -571,6 +571,8 @@ MonoBehaviour:
   jumpSpeedOrig: 0
   HPOrig: 0
   playerVel: {x: 0, y: 0, z: 0}
+  upgradeHeight: 10
+  upgradeHeightMult: 1.5
 --- !u!143 &424459125158007274
 CharacterController:
   m_ObjectHideFlags: 0

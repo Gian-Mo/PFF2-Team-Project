@@ -58,6 +58,8 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     float previousYPosition;
     float currentYPos;
     float peakHeight;
+    public float upgradeHeight;
+    public float upgradeHeightMult;
 
     void Start()
     {
@@ -94,6 +96,8 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     void Movement()
     {
+        Upgrade();
+
         shootTimer += Time.deltaTime;
         slowTimer += Time.deltaTime;
         if (isSpeedBoosting)
@@ -380,5 +384,12 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         SetWand();
     }
 
-    
+    void Upgrade()
+    {
+        if(peakHeight > upgradeHeight)
+        {
+            GameManager.instance.Upgrade();
+            upgradeHeight *= upgradeHeightMult;
+        }
+    }
 }
