@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -28,8 +28,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     [SerializeField] int meleeDamageMod;
     [SerializeField] float shootRate;
-    [SerializeField] int meleeDist;
-   public float pullRate;
+    [SerializeField] int shootDist;
+    [SerializeField] float fallThreshold;
+    public float pullRate;
 
 
     float shootTimer;
@@ -52,8 +53,10 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     float slowTimer;
     float slowTime;
 
-
-
+    bool hasJumped = false;
+    float groundY;
+    float previousYPosition;
+    float peakHeight;
 
     void Start()
     {
@@ -63,10 +66,10 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         playerScaleOrig = transform.localScale;
         isJumping = false;
         speedOrig = speed;
+        groundY = transform.position.y;
 
         SetWand();
     }
-
 
     void Update()
     {
@@ -76,7 +79,33 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         }
 
         Sprint();
+
+        float currentYPosition = transform.position.y; 
+        if (Input.GetButtonDown("Jump") && !hasJumped) // Detect jump
+        {
+            hasJumped = true; 
+            peakHeight = currentYPosition;
+            GameManager.instance.updateHeightCounter(currentYPosition);
+            Debug.Log("Jumped from: " + currentYPosition);
+        }
+        if (peakHeight < currentYPosition) // Update peak while rising. Peak calculated to prevent frame by frame subtraction
+        {
+            peakHeight = currentYPosition;
+        }
+        if (hasJumped && controller.isGrounded) // Landed
+        {
+            float fallDistance = peakHeight - currentYPosition;
+            if (fallDistance > 0.1f)
+            {
+                GameManager.instance.subtractHeightCounter(fallDistance);
+                Debug.Log("Landed. Fall distance: " + fallDistance);
+            }
+            hasJumped = false; 
+            peakHeight = 0f;
+        }
+        previousYPosition = currentYPosition;
     }
+
     void Movement()
     {
         shootTimer += Time.deltaTime;
@@ -151,7 +180,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             isJumping = true;
         }
     }
-
     void Sprint()
     {
 
@@ -172,9 +200,12 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     {
         meleeDamageMod = wandInfo.shootDamageMod;       
         shootRate = wandInfo.shootRate;
+        projectile = wandInfo.bulletTypes[0];
+
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
     }
+
     void ShootProjectile()
     {
         Vector3 rotation = new Vector3(30, 0, 0);
@@ -275,8 +306,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             }
         }
     }
-
-
 
     void Crouch()
     {

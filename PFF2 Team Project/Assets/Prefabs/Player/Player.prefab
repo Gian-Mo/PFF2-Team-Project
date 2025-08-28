@@ -543,6 +543,10 @@ MonoBehaviour:
   controller: {fileID: 424459125158007274}
   wand: {fileID: 6315112688116486136}
   wandInfo: {fileID: 11400000, guid: 86849c3a6d693384a8cab60b04965e13, type: 2}
+  spellTypes:
+  - {fileID: 8777413897309509247, guid: 212c5f71d6914db4daadde13733cf069, type: 3}
+  - {fileID: 8777413897309509247, guid: 5188cd43072563a48aa3006782173e85, type: 3}
+  - {fileID: 8777413897309509247, guid: 44f2c1bbe8ed83f44912cb9456cc0dfe, type: 3}
   HP: 15
   speed: 8
   sprintMod: 2

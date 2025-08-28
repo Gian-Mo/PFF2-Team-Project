@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using System.Collections;
 
 
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -13,9 +12,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuGameInstructions;
 
-    [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] TMP_Text gameGoalCountText; // keeps track of the player's kill count
+    [SerializeField] TMP_Text gameHeightCountText;
 
     public Image playerHPBar;
     public GameObject heavySpell;
@@ -27,9 +28,17 @@ public class GameManager : MonoBehaviour
 
 
 
+
+
+
+
+
+
     float timeScaleOrig;
+    float heightCounter;
 
     public int gameGoalCount;
+    public float gameHeightCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -88,9 +97,24 @@ public class GameManager : MonoBehaviour
     {
         gameGoalCount += amount;
         gameGoalCountText.text = gameGoalCount.ToString();
-
-
     }
+
+    public void updateHeightCounter(float amount)
+    {
+        gameHeightCount += amount;
+        gameHeightCountText.text = gameHeightCount.ToString();
+    }
+
+    public void subtractHeightCounter(float amount)
+    {
+        gameHeightCount -= amount;
+        if (gameHeightCount < 0)
+        { 
+            gameHeightCount = 0;
+        }
+        gameHeightCountText.text = gameHeightCount.ToString();
+    }
+
     public void YouWin()
     {
         // you won
@@ -105,6 +129,14 @@ public class GameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
+    public void Settings()
+    {
+        statePause();
+        menuActive.SetActive(false);
+        statePause();
+        menuActive = menuSettings;
+        menuActive.SetActive(true);
+    }
 
     public void FlashScreen(Color color)
     {
@@ -114,6 +146,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(flashDamageScreen());
     }
+
     IEnumerator flashDamageScreen()
     {
         playerFlashScreen.SetActive(true);
