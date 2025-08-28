@@ -27,4 +27,13 @@ public class buttonFunctions : MonoBehaviour
     {
         GameManager.instance.stateUnpause();
     }
+    public void settings()
+    {
+        GameManager.instance.Settings();
+    }
+    public void back() // simply puts the menu back to the previous one
+    {
+        
+    }
+
 }

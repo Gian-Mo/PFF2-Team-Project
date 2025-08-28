@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 //TODOS
@@ -21,15 +21,15 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     [SerializeField] Transform headPos;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject projectile;
-    
+
     public int gravity;
 
     [SerializeField] int shootDamageMod;
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
-   public float pullRate;
+    [SerializeField] float fallThreshold;
+    public float pullRate;
 
-    
     float shootTimer;
 
     public int gravityOrig;
@@ -46,8 +46,10 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     bool isJumping;
     float slowTimer;
 
-   
-
+    bool hasJumped = false;
+    float groundY;
+    float previousYPosition;
+    float peakHeight;
 
     void Start()
     {
@@ -55,12 +57,12 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         gravityOrig = gravity;
         jumpSpeedOrig = jumpSpeed;
         playerScaleOrig = transform.localScale;
-        isJumping = false;        
+        isJumping = false;
         speedOrig = speed;
+        groundY = transform.position.y;
 
         SetWand();
     }
-
 
     void Update()
     {
@@ -70,12 +72,38 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         }
 
         Sprint();
+
+        float currentYPosition = transform.position.y; 
+        if (Input.GetButtonDown("Jump") && !hasJumped) // Detect jump
+        {
+            hasJumped = true; 
+            peakHeight = currentYPosition;
+            GameManager.instance.updateHeightCounter(currentYPosition);
+            Debug.Log("Jumped from: " + currentYPosition);
+        }
+        if (peakHeight < currentYPosition) // Update peak while rising. Peak calculated to prevent frame by frame subtraction
+        {
+            peakHeight = currentYPosition;
+        }
+        if (hasJumped && controller.isGrounded) // Landed
+        {
+            float fallDistance = peakHeight - currentYPosition;
+            if (fallDistance > 0.1f)
+            {
+                GameManager.instance.subtractHeightCounter(fallDistance);
+                Debug.Log("Landed. Fall distance: " + fallDistance);
+            }
+            hasJumped = false; 
+            peakHeight = 0f;
+        }
+        previousYPosition = currentYPosition;
     }
+
     void Movement()
     {
         shootTimer += Time.deltaTime;
         slowTimer += Time.deltaTime;
-        
+
 
 
         if (controller.isGrounded)
@@ -97,7 +125,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
         WallRunning();
 
-        controller.Move(playerVel * Time.deltaTime);      
+        controller.Move(playerVel * Time.deltaTime);
 
         Crouch();
 
@@ -115,7 +143,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             resetSpeed();
             FullSlowScreen();
         }
-               
+
     }
 
     void Jump()
@@ -128,7 +156,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             isJumping = true;
         }
     }
-
     void Sprint()
     {
 
@@ -147,21 +174,23 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     void SetWand()
     {
-        shootDamageMod = wandInfo.shootDamageMod;       
+        shootDamageMod = wandInfo.shootDamageMod;
         shootRate = wandInfo.shootRate;
-       projectile = wandInfo.bulletTypes[0];
+        projectile = wandInfo.bulletTypes[0];
 
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
     }
+
     void ShootProjectile()
     {
-       
 
-       Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
+
+        Instantiate(projectile, shootPos.position, Camera.main.transform.rotation);
 
 
     }
+
     void ShootRay()
     {
         RaycastHit hit;
@@ -184,9 +213,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         }
 
     }
-   
 
-  
     void WallRunning()
     {
         RaycastHit left;
@@ -198,9 +225,9 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             if (right.collider.CompareTag("CanWallRun"))
             {
                 jumpCount = 0;
-                playerVel = Vector3.zero; 
+                playerVel = Vector3.zero;
             }
-           
+
         }
         if (Physics.Raycast(headPos.position, -transform.right, out left, 1, ~ignoreLayer))
         {
@@ -211,8 +238,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             }
         }
     }
-
-
 
     void Crouch()
     {
@@ -247,7 +272,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 
-   
+
     void FullSlowScreen()
     {
         if (speed <= 0)
@@ -259,12 +284,12 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             GameManager.instance.playerFlashScreen.SetActive(false);
         }
     }
-    
+
     public void takeForce(Vector3 direction)
     {
-        playerVel += direction;        
-        
-    } 
+        playerVel += direction;
+
+    }
 
     public void takeSlow(int amount, float slowtime)
     {
@@ -284,7 +309,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
             GameManager.instance.YouWin();
         }
     }
-    
+
 
     void resetSpeed()
     {
