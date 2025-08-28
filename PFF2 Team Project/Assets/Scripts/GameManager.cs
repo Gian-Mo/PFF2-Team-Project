@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
     public void updateHeightCounter(float amount)
     {
         gameHeightCount += amount;
-        gameHeightCountText.text = gameHeightCount.ToString();
+        gameHeightCountText.text = gameHeightCount.ToString("F0");
     }
 
     public void YouWin()

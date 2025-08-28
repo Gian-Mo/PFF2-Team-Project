@@ -81,24 +81,15 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
         Sprint();
 
-        float currentYPosition = transform.position.y; 
-        if (Input.GetButtonDown("Jump") && !hasJumped) // Detect jump
+        currentYPos = transform.position.y / 100; 
+        
+        if (peakHeight < currentYPos) // Update peak while rising. Peak calculated to prevent frame by frame subtraction
         {
-            hasJumped = true; 
-            peakHeight = currentYPosition;
-            GameManager.instance.updateHeightCounter(currentYPosition);
-            Debug.Log("Jumped from: " + currentYPosition);
+            peakHeight = currentYPos;
+            GameManager.instance.updateHeightCounter(peakHeight);
+
         }
-        if (peakHeight < currentYPosition) // Update peak while rising. Peak calculated to prevent frame by frame subtraction
-        {
-            peakHeight = currentYPosition;
-        }
-        if (hasJumped && controller.isGrounded) // Landed
-        {
-            hasJumped = false; 
-            peakHeight = 0f;
-        }
-        previousYPosition = currentYPosition;
+       
     }
 
     void Movement()
