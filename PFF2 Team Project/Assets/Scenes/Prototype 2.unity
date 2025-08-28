@@ -481,31 +481,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2276764965171400527, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2806056001165343078, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: epic
-      value: 
-      objectReference: {fileID: 11400000, guid: 471f1c2a3bcbfb44594ad13058867f9f, type: 2}
-    - target: {fileID: 2806056001165343078, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: medium
-      value: 
-      objectReference: {fileID: 11400000, guid: 92295cf1acd961d418dedf341670a287, type: 2}
-    - target: {fileID: 2806056001165343078, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: WandUpgradeScreen
-      value: 
-      objectReference: {fileID: 1506536191}
-    - target: {fileID: 2806056001165343078, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: gameHeightCountText
-      value: 
-      objectReference: {fileID: 810744111}
-    - target: {fileID: 3283810287662818203, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5671433381294341440, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
+    - target: {fileID: 4934808579085636548, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -514,17 +490,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
---- !u!114 &810744111 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7764108423122133227, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-  m_PrefabInstance: {fileID: 810744108}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &989532284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -651,11 +616,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8742355882087074622, guid: e9eca43b21e705449b1242a569bdb279, type: 3}
   m_PrefabInstance: {fileID: 1293618593}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1506536191 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3283810287662818203, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
-  m_PrefabInstance: {fileID: 810744108}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

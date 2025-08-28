@@ -56,6 +56,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     bool hasJumped = false;
     float groundY;
     float previousYPosition;
+    float currentYPos;
     float peakHeight;
 
     void Start()
@@ -92,18 +93,18 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         {
             peakHeight = currentYPosition;
         }
-        if (hasJumped && controller.isGrounded) // Landed
-        {
-            float fallDistance = peakHeight - currentYPosition;
-            if (fallDistance > 0.1f)
-            {
-                GameManager.instance.subtractHeightCounter(fallDistance);
-                Debug.Log("Landed. Fall distance: " + fallDistance);
-            }
-            hasJumped = false; 
-            peakHeight = 0f;
-        }
-        previousYPosition = currentYPosition;
+        //if (hasJumped && controller.isGrounded) // Landed
+        //{
+        //    float fallDistance = peakHeight - currentYPosition;
+        //    if (fallDistance > 0.1f)
+        //    {
+        //        GameManager.instance.subtractHeightCounter(fallDistance);
+        //        Debug.Log("Landed. Fall distance: " + fallDistance);
+        //    }
+        //    hasJumped = false; 
+        //    peakHeight = 0f;
+        //}
+        //previousYPosition = currentYPosition;
     }
 
     void Movement()
@@ -323,7 +324,14 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     {
         HP -= ammount;
         updatePlayerUI();
-        GameManager.instance.FlashScreen(Color.red);
+        if (ammount > 0)
+        {
+            GameManager.instance.FlashScreen(Color.red); 
+        }
+        else if (ammount < 0)
+        {
+            GameManager.instance.FlashScreen(Color.green);
+        }
         if (HP <= 0)
         {
             GameManager.instance.YouLose();

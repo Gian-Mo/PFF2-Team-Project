@@ -1742,9 +1742,9 @@ MonoBehaviour:
   menuLose: {fileID: 4013818499408654540}
   menuSettings: {fileID: 0}
   menuGameInstructions: {fileID: 2276764965171400527}
-  WandUpgradeScreen: {fileID: 6956725531034298740}
+  WandUpgradeScreen: {fileID: 3283810287662818203}
   gameGoalCountText: {fileID: 2402159792908722580}
-  gameHeightCountText: {fileID: 7764108423122133227}
+  gameHeightCountText: {fileID: 3967571695515441675}
   medium: {fileID: 11400000, guid: 92295cf1acd961d418dedf341670a287, type: 2}
   epic: {fileID: 11400000, guid: 471f1c2a3bcbfb44594ad13058867f9f, type: 2}
   playerHPBar: {fileID: 7000783513559521193}
@@ -2743,7 +2743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3031309725778353388
 RectTransform:
   m_ObjectHideFlags: 0
