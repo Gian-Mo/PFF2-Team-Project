@@ -26,14 +26,6 @@ public class GameManager : MonoBehaviour
     public playerController playerScript;
     public bool isPaused;
 
-
-
-
-
-
-
-
-
     float timeScaleOrig;
     float heightCounter;
 
@@ -102,16 +94,6 @@ public class GameManager : MonoBehaviour
     public void updateHeightCounter(float amount)
     {
         gameHeightCount += amount;
-        gameHeightCountText.text = gameHeightCount.ToString();
-    }
-
-    public void subtractHeightCounter(float amount)
-    {
-        gameHeightCount -= amount;
-        if (gameHeightCount < 0)
-        { 
-            gameHeightCount = 0;
-        }
         gameHeightCountText.text = gameHeightCount.ToString();
     }
 

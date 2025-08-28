@@ -94,12 +94,6 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         }
         if (hasJumped && controller.isGrounded) // Landed
         {
-            float fallDistance = peakHeight - currentYPosition;
-            if (fallDistance > 0.1f)
-            {
-                GameManager.instance.subtractHeightCounter(fallDistance);
-                Debug.Log("Landed. Fall distance: " + fallDistance);
-            }
             hasJumped = false; 
             peakHeight = 0f;
         }
@@ -200,7 +194,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     {
         meleeDamageMod = wandInfo.shootDamageMod;       
         shootRate = wandInfo.shootRate;
-        projectile = wandInfo.bulletTypes[0];
+        
 
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
@@ -222,7 +216,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward);
 
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, meleeDist, ~ignoreLayer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
 
