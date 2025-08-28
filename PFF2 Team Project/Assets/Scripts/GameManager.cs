@@ -113,16 +113,6 @@ public class GameManager : MonoBehaviour
         gameHeightCountText.text = gameHeightCount.ToString();
     }
 
-    public void subtractHeightCounter(float amount)
-    {
-        gameHeightCount -= amount;
-        if (gameHeightCount < 0)
-        { 
-            gameHeightCount = 0;
-        }
-        gameHeightCountText.text = gameHeightCount.ToString();
-    }
-
     public void YouWin()
     {
         // you won
