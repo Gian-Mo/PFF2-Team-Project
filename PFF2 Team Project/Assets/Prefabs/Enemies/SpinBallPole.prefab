@@ -175,10 +175,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   rb: {fileID: 4426502354385690832}
+  slowAmount: 0
   damageAmount: 5
   damageRate: 0.5
   speed: 0
   destroyTime: 0
+  slowtime: 0
+  damageMultiplier: 1
 --- !u!33 &4226640364937706048
 MeshFilter:
   m_ObjectHideFlags: 0

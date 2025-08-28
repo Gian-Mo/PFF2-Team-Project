@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8554955a949a77d49b76d0f702b94066, type: 3}
-  m_Name: Medium
+  m_Name: Epic
   m_EditorClassIdentifier: 
-  model: {fileID: 2548421307829038991, guid: a976c1b6e1a7097458bb2765bcb0ab4d, type: 3}
-  shootDamageMod: 1.5
-  shootRate: 0.6
+  model: {fileID: 4260819330917749670, guid: 3b4b27421c2a6de4f88b36cc36531976, type: 3}
+  shootDamageMod: 2
+  shootRate: 0.4
   hitEffect: {fileID: 0}
   shootSound: []
   shootVol: 0

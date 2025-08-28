@@ -289,6 +289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_slow
       objectReference: {fileID: 0}
+    - target: {fileID: 4455663352320621078, guid: b4b51c124d9b63c44a413654b980ca00, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8632022896681043122, guid: b4b51c124d9b63c44a413654b980ca00, type: 3}
       propertyPath: HP
       value: 1
@@ -309,6 +313,10 @@ PrefabInstance:
     - target: {fileID: 2275872337452808513, guid: 81ecdd5aaa098e0449c46bc1c62acca6, type: 3}
       propertyPath: m_Name
       value: Turret_Basic
+      objectReference: {fileID: 0}
+    - target: {fileID: 2275872337452808513, guid: 81ecdd5aaa098e0449c46bc1c62acca6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7911420600683808629, guid: 81ecdd5aaa098e0449c46bc1c62acca6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1487,6 +1495,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1552694172170397149, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934808579085636548, guid: e759a0e76e67dcd40a1bc9f8a62e9ea6, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

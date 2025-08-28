@@ -47,6 +47,8 @@ public class Damage : MonoBehaviour
         {
             return;
         }
+        float tempDamage = damageAmount * damageMultiplier;
+        damageAmount = Mathf.CeilToInt(tempDamage);
 
         IDamage dmg = other.GetComponent<IDamage>();
         IForce push = other.GetComponent<IForce>();

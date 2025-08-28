@@ -55,7 +55,7 @@ MonoBehaviour:
   speed: 45
   destroyTime: 5
   slowtime: 0
-  ignoreLayer: 7
+  damageMultiplier: 1
 --- !u!135 &5917692630976584314
 SphereCollider:
   m_ObjectHideFlags: 0

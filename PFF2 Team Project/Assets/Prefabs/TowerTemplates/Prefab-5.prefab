@@ -3643,7 +3643,7 @@ CapsuleCollider:
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0.000000059604645, y: 7.29, z: -0.00000008940697}
 --- !u!1 &5444680193300463560
 GameObject:
   m_ObjectHideFlags: 0
@@ -6003,7 +6003,7 @@ CapsuleCollider:
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0.000000059604645, y: 6.43, z: -0.00000008940697}
 --- !u!1001 &1743162242459485276
 PrefabInstance:
   m_ObjectHideFlags: 0

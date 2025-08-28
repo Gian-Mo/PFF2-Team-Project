@@ -13,10 +13,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuSettings;
-    [SerializeField] GameObject menuGameInstructions;
+    [SerializeField] GameObject menuGameInstructions; 
+    [SerializeField] GameObject WandUpgradeScreen;
 
     [SerializeField] TMP_Text gameGoalCountText; // keeps track of the player's kill count
     [SerializeField] TMP_Text gameHeightCountText;
+    [SerializeField] WandStats medium;
+    [SerializeField] WandStats epic;
 
     public Image playerHPBar;
     public GameObject heavySpell;
@@ -25,20 +28,15 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
     public bool isPaused;
-
-
-
-
-
-
-
-
+    bool wandPopUp;
 
     float timeScaleOrig;
     float heightCounter;
 
     public int gameGoalCount;
     public float gameHeightCount;
+    bool wandMax;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -53,6 +51,7 @@ public class GameManager : MonoBehaviour
         statePause();
         menuActive = menuGameInstructions;
         menuActive.SetActive(true);
+        wandMax = false;
     }
 
 
@@ -72,6 +71,14 @@ public class GameManager : MonoBehaviour
             {
                 stateUnpause();
             }
+        }
+
+        if (!wandMax)
+        {
+           
+            PlayerUpgrade();
+
+         
         }
     }
 
@@ -97,6 +104,7 @@ public class GameManager : MonoBehaviour
     {
         gameGoalCount += amount;
         gameGoalCountText.text = gameGoalCount.ToString();
+        wandPopUp = false;
     }
 
     public void updateHeightCounter(float amount)
@@ -153,4 +161,34 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         playerFlashScreen.SetActive(false);
     }
+
+
+    void PlayerUpgrade()
+    {
+
+        if (gameGoalCount == 1 && !wandPopUp)
+        {
+            playerScript.wandInfo = medium;
+            playerScript.SetWand();
+             wandPopUp = true;
+            StartCoroutine(wandUpgradePopUp());
+        }
+        else if (gameGoalCount == 3 && !wandPopUp)
+        {
+            playerScript.wandInfo = epic;
+            playerScript.SetWand();
+            StartCoroutine(wandUpgradePopUp());
+            wandPopUp = true;
+            wandMax = true;
+        }
+    }
+
+    IEnumerator wandUpgradePopUp()
+    {
+
+      WandUpgradeScreen.SetActive(true);
+        yield return new WaitForSeconds(3);
+        WandUpgradeScreen.SetActive(false);
+    }
+    
 }

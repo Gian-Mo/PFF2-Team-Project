@@ -28,7 +28,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     [SerializeField] int meleeDamageMod;
     [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
+    [SerializeField] int meleeDist;
     [SerializeField] float fallThreshold;
     public float pullRate;
 
@@ -196,12 +196,10 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 
     }
 
-    void SetWand()
+    public void SetWand()
     {
-        meleeDamageMod = wandInfo.shootDamageMod;       
+            
         shootRate = wandInfo.shootRate;
-        projectile = wandInfo.bulletTypes[0];
-
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
     }
