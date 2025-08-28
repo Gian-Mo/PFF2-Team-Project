@@ -194,8 +194,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
     public void SetWand()
     {
             
-        shootRate = wandInfo.shootRate;
-        projectile = wandInfo.bulletTypes[0];
+        shootRate = wandInfo.shootRate;      
 
         wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
         wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
