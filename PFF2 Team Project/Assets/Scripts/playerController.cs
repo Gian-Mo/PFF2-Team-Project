@@ -377,7 +377,7 @@ public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
         speed = speedOrig;
     }
 
-    public void getGunStats(WandStats wand)
+    public void getWandStats(WandStats wand)
     {
         wandInfo = wand;
        

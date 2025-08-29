@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IPickUp
 {
-    public void getGunStats(WandStats wand);
+    public void getWandStats(WandStats wand);
    
    
 }

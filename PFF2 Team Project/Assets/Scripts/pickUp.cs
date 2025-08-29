@@ -12,7 +12,7 @@ public class pickUp : MonoBehaviour
 
         if (pickable != null)
         {
-            pickable.getGunStats(wand);            
+            pickable.getWandStats(wand);            
             Destroy(gameObject);
         }
 
