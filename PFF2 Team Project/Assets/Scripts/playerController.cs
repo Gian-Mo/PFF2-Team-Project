@@ -1,50 +1,65 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
+
 //TODOS
 // - Implement the player controller
 // - Implement the IDamage portion of it
 //
 
-public class playerController : MonoBehaviour, IDamage, IForce
+public class playerController : MonoBehaviour, IDamage, IForce, IPickUp
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
+    [SerializeField] GameObject wand;
+   public WandStats wandInfo;
+    public List<GameObject> spellTypes;
 
-
-    [SerializeField] int HP;
-    [SerializeField] int speed;
+    [SerializeField] public int HP;
+    [SerializeField] public int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] Transform headPos;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject projectile;
-    
+
     public int gravity;
 
-    [SerializeField] int shootDamage;
+    [SerializeField] int meleeDamageMod;
     [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
+    [SerializeField] int meleeDist;
+    [SerializeField] float fallThreshold;
+    public float pullRate;
 
 
     float shootTimer;
-
+    public float healTimer;
+    public float speedTimer;
+    public float speedTimerMax;
+    public float healTimerMax;
+    public bool isHealing;
+    public bool isSpeedBoosting;
     public int gravityOrig;
     public int jumpSpeedOrig;
-    int HPOrig;
+    public int HPOrig;
     int jumpCount;
     int speedOrig;
-
     Vector3 moveDirection;
     public Vector3 playerVel;
     Vector3 playerScaleOrig;
-
     bool isSprinting;
     bool isJumping;
     float slowTimer;
+    float slowTime;
 
-
+    bool hasJumped = false;
+    float groundY;
+    float previousYPosition;
+    float currentYPos;
+    float peakHeight;
+    public float upgradeHeight;
+    public float upgradeHeightMult;
 
     void Start()
     {
@@ -54,17 +69,42 @@ public class playerController : MonoBehaviour, IDamage, IForce
         playerScaleOrig = transform.localScale;
         isJumping = false;
         speedOrig = speed;
-    }
+        groundY = transform.position.y;
 
+        SetWand();
+    }
 
     void Update()
     {
-        Movement();
+        if (!GameManager.instance.isPaused)
+        {
+            Movement();
+        }
+
+        Sprint();
+
+        currentYPos = transform.position.y / 100; 
+        
+        if (peakHeight < currentYPos) // Update peak while rising. Peak calculated to prevent frame by frame subtraction
+        {
+            peakHeight = currentYPos;
+            GameManager.instance.updateHeightCounter(peakHeight);
+
+        }
+       
     }
+
     void Movement()
     {
+        Upgrade();
+
         shootTimer += Time.deltaTime;
         slowTimer += Time.deltaTime;
+        if (isSpeedBoosting)
+        {
+            speedTimer += Time.deltaTime;
+        }
+        if (isHealing) { healTimer += Time.deltaTime; }
 
 
         if (controller.isGrounded)
@@ -81,14 +121,12 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
         controller.Move(moveDirection * speed * Time.deltaTime);
 
-       
-        Jump(); 
-        
+
+        Jump();
+
         WallRunning();
 
         controller.Move(playerVel * Time.deltaTime);
-
-        Sprint();
 
         Crouch();
 
@@ -97,15 +135,29 @@ public class playerController : MonoBehaviour, IDamage, IForce
             ShootProjectile();
             shootTimer = 0;
         }
+        if (Input.GetButton("Melee") && shootTimer >= shootRate)
+        {
+            Melee();
+            shootTimer = 0;
+        }
         if (speed <= 0)
         {
             FullSlowScreen();
         }
-        if (slowTimer >= 2.5f && speed < speedOrig)
+        if (slowTimer >= slowTime && speed < speedOrig)
         {
             resetSpeed();
             FullSlowScreen();
         }
+        if(healTimer >= healTimerMax)
+        {
+            HP = HPOrig;
+        }
+        if(speedTimer >= speedTimerMax)
+        {
+            speed = speedOrig;
+        }
+
     }
 
     void Jump()
@@ -118,7 +170,6 @@ public class playerController : MonoBehaviour, IDamage, IForce
             isJumping = true;
         }
     }
-
     void Sprint()
     {
 
@@ -135,35 +186,89 @@ public class playerController : MonoBehaviour, IDamage, IForce
 
     }
 
+    public void SetWand()
+    {
+            
+        shootRate = wandInfo.shootRate;      
+
+        wand.GetComponent<MeshFilter>().sharedMesh = wandInfo.model.GetComponent<MeshFilter>().sharedMesh;
+        wand.GetComponent<MeshRenderer>().sharedMaterial = wandInfo.model.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
     void ShootProjectile()
     {
-       
-
-       Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
-
+        Vector3 rotation = new Vector3(30, 0, 0);
+        StartCoroutine(ShootAttack(rotation));      
+        AlternateSpell();      
+       GameObject spell = Instantiate(projectile,shootPos.position, Camera.main.transform.rotation);
+        spell.GetComponent<Damage>().damageMultiplier = wandInfo.shootDamageMod;      
 
     }
-    void ShootRay()
+    void Melee()
     {
         RaycastHit hit;
         IDamage dmg = null;
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward);
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
 
             dmg = hit.collider.GetComponent<IDamage>();
         }
 
-
+        Vector3 move = new Vector3(0,0,0.5f);
+        StartCoroutine(MeleeAttack(move));
 
         if (dmg != null)
         {
 
-            dmg.takeDamage(shootDamage);
+            dmg.takeDamage(meleeDamageMod);
 
         }
 
+
+    }
+
+    void AlternateSpell()
+    {
+        //Add spell randomly to a list and shoot them in that order
+
+        // The chances will vary per type of wand
+
+        int index = Random.Range(1, 101);
+
+        if (index < 71)
+        {
+            projectile = spellTypes[0];
+        }
+        else if (index < 91)
+        {
+            projectile = spellTypes[1];
+        }
+        else if (index < 101)
+        {
+            projectile = spellTypes[2];
+        }
+
+    }
+    IEnumerator MeleeAttack(Vector3 move)
+    {
+        wand.transform.localPosition += move;
+
+        yield return new WaitForSeconds(0.1f) ;
+
+        wand.transform.localPosition -= move;
+    }
+    IEnumerator ShootAttack(Vector3 rotation)
+    {
+        
+        wand.transform.Rotate(rotation) ;
+
+        yield return new WaitForSeconds(0.1f);
+
+        wand.transform.Rotate(-rotation);
     }
 
     void WallRunning()
@@ -177,9 +282,9 @@ public class playerController : MonoBehaviour, IDamage, IForce
             if (right.collider.CompareTag("CanWallRun"))
             {
                 jumpCount = 0;
-                playerVel = Vector3.zero; 
+                playerVel = Vector3.zero;
             }
-           
+
         }
         if (Physics.Raycast(headPos.position, -transform.right, out left, 1, ~ignoreLayer))
         {
@@ -190,8 +295,6 @@ public class playerController : MonoBehaviour, IDamage, IForce
             }
         }
     }
-
-
 
     void Crouch()
     {
@@ -211,7 +314,14 @@ public class playerController : MonoBehaviour, IDamage, IForce
     {
         HP -= ammount;
         updatePlayerUI();
-        StartCoroutine(flashDamageScreen());
+        if (ammount > 0)
+        {
+            GameManager.instance.FlashScreen(Color.red); 
+        }
+        else if (ammount < 0)
+        {
+            GameManager.instance.FlashScreen(Color.green);
+        }
         if (HP <= 0)
         {
             GameManager.instance.YouLose();
@@ -226,50 +336,31 @@ public class playerController : MonoBehaviour, IDamage, IForce
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 
-    IEnumerator flashDamageScreen()
-    {
-        GameManager.instance.playerDamageScreen.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        GameManager.instance.playerDamageScreen.SetActive(false);
-    }
-    IEnumerator flashSlowScreen()
-    {
-        GameManager.instance.playerSlowScreen.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        GameManager.instance.playerSlowScreen.SetActive(false);
-    }
+
     void FullSlowScreen()
     {
         if (speed <= 0)
         {
-            GameManager.instance.playerSlowScreen.SetActive(true);
+            GameManager.instance.playerFlashScreen.SetActive(true);
         }
         else
         {
-            GameManager.instance.playerSlowScreen.SetActive(false);
+            GameManager.instance.playerFlashScreen.SetActive(false);
         }
     }
-    
+
     public void takeForce(Vector3 direction)
     {
-        playerVel += direction;        
-        
-    }
+        playerVel += direction;
 
-  public bool IsJumping()
-    {
-        return isJumping;
     }
 
     public void takeSlow(int amount, float slowtime)
     {
         slowTimer = 0;
-        StartCoroutine(flashSlowScreen());
+        slowTime = slowtime;
+        GameManager.instance.FlashScreen(Color.cyan);
         speed /= amount;
-        if (slowTimer >= slowtime)
-        {
-            speed *= amount;
-        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -279,10 +370,26 @@ public class playerController : MonoBehaviour, IDamage, IForce
             GameManager.instance.YouWin();
         }
     }
-    
+
 
     void resetSpeed()
     {
         speed = speedOrig;
+    }
+
+    public void getWandStats(WandStats wand)
+    {
+        wandInfo = wand;
+       
+        SetWand();
+    }
+
+    void Upgrade()
+    {
+        if(peakHeight > upgradeHeight)
+        {
+            GameManager.instance.Upgrade();
+            upgradeHeight *= upgradeHeightMult;
+        }
     }
 }

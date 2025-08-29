@@ -7,7 +7,7 @@ public class CheckPointFunc : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         model.material.color = Color.green;
-        SettingsManager.instance.ChangeSpawnPosition(transform.position);
+        //SettingsManager.instance.ChangeSpawnPosition(transform.position);
 
     }
 

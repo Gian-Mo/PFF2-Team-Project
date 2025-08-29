@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4292543780898615274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7771233785843581919}
+  - component: {fileID: 9074401743249185126}
+  m_Layer: 0
+  m_Name: Tower Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7771233785843581919
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4292543780898615274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 33.8865, y: 21.86851, z: 3.9359999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9074401743249185126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4292543780898615274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822e5b4d296eaab44b7a37744e63bdf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  lava: {fileID: 0}
+  towerPrefabs:
+  - {fileID: 8814839673865168240, guid: f1814590545e6ad4e8d0babb2a8bf9c9, type: 3}
+  - {fileID: 6820765119321454884, guid: a42debe64d4fed144974a20b7237470b, type: 3}
+  - {fileID: 4428653194106679310, guid: 1c0dfef9823170b4d87c28419e424c69, type: 3}
+  - {fileID: 3368889013599105767, guid: 0af55f15e21ab85478f7f1c574a9b001, type: 3}
+  - {fileID: 8261877514345527569, guid: ffaa0a4a58f4ecd4aa34450f29c6f751, type: 3}
+  sectionHeight: 28
+  bufferSections: 5

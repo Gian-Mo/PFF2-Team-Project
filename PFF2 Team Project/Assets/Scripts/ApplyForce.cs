@@ -1,22 +1,23 @@
 using System.Collections;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 
 //TODOS
 // - FIgure This out;
-public class NewMonoBehaviourScript : MonoBehaviour
+public class ApplyForce : MonoBehaviour
 {
     public enum typeOfForce { toward, against }
     [SerializeField] typeOfForce type;
     [SerializeField] float timeOfForce;
-    [SerializeField] float speed;
-  
+   public float speed;
+
+    public bool allowFromStart;
 
     Rigidbody targetRigidBody;
  
     float timer;
-    Vector3 direction;
+   protected Vector3 direction;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,7 +32,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         
 
     }
-    public void OnTriggerEnter(Collider other)
+   virtual public void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) return;
         DefineDirection(other);       
@@ -39,21 +40,23 @@ public class NewMonoBehaviourScript : MonoBehaviour
     }
 
 
-    public void OnTriggerStay(Collider other)
+    virtual public void OnTriggerStay(Collider other)
     {
         if (other.isTrigger) return;
-        IForce force = other.GetComponent<IForce>();
-             
-
-        force.takeForce(direction);
-     
+        TriggerStayFunc(other);
 
     }
 
+    public void TriggerStayFunc(Collider other)
+    {
+      
+        IForce force = other.GetComponent<IForce>();
+        force.takeForce(direction);
+    }
     
 
-    void DefineDirection(Collider other)
-    {
+   virtual public void DefineDirection(Collider other)
+   {
         if (type == typeOfForce.toward)
         {
             direction = -transform.forward * speed;
@@ -66,6 +69,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     }
 
-  
+  public void SetType(typeOfForce newType)
+    {
+        type = newType;
+    }
 
 }

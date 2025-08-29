@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections;
-using UnityEditor.UIElements;
+
 
 public class Damage : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    enum damageType { moving, stationary, DOT, homing, slow }
+    enum damageType { moving, stationary, DOT, homing, slow, repulse}
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
 
@@ -15,16 +15,17 @@ public class Damage : MonoBehaviour
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
     [SerializeField] float slowtime;
+    public float damageMultiplier;
   
 
     bool isdamaging;
 
     void Start()
     {
-        if (type == damageType.moving || type == damageType.homing || type == damageType.slow)
+        if (type == damageType.moving || type == damageType.homing || type == damageType.slow || type == damageType.repulse )
         {
             Destroy(gameObject, destroyTime);
-            if (type == damageType.moving || type == damageType.slow)
+            if (type == damageType.moving || type == damageType.slow || type == damageType.repulse)
             {
                 rb.linearVelocity = transform.forward * speed;
             }
@@ -46,19 +47,24 @@ public class Damage : MonoBehaviour
         {
             return;
         }
+        float tempDamage = damageAmount * damageMultiplier;
+        damageAmount = Mathf.CeilToInt(tempDamage);
 
         IDamage dmg = other.GetComponent<IDamage>();
+        IForce push = other.GetComponent<IForce>();
         if (dmg != null && type == damageType.slow)
         {
             dmg.takeSlow(slowAmount, slowtime);
         }
+        else if (push != null && type == damageType.repulse)
+        {
+            push.takeForce(rb.linearVelocity);
+        }
         else if (dmg != null && type != damageType.DOT)
-
-        if (dmg != null && type != damageType.DOT)
         {
             dmg.takeDamage(damageAmount);
         }
-        if (type == damageType.moving || type == damageType.homing || type == damageType.slow)
+        if (type == damageType.moving || type == damageType.homing || type == damageType.slow || type == damageType.repulse)
         {
             Destroy(gameObject);
         }
